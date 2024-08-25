@@ -4,6 +4,14 @@ Entry for [ETHOnline 2024 hackathon](https://ethglobal.com/events/ethonline2024)
 
 > A text-based RPG where your NFTs become the stars of unique adventures. Pick a storyline, cast your NFTs in different roles, give them a personality type and alignment, and let card-based sequences drive the story. Finish the story to unlock new cards and new ways to play !
 
+## Technical overview 
+
+- `smart-contracts/` : code for the smart contracts on which the game relies to run ;
+- `chatbot/` : code for the chatbot used by end-users to play the game ;
+
+Check the `README.md` file of each folders above for running instructions, pre-requisites and implementation details.
+
+## What is it ?
 
 Remember when you were a kid and how you made up stories with toys that had nothing to do with each others ? Your favourite teddy bear had one role, barbies another role, action men another role, Pokémon figurines another… and somehow you managed to create a story that was able to entertain you (and maybe some of your friends) for a few hours.
 
@@ -20,7 +28,7 @@ The game starts with the user selecting a **storyline**, which defines a specifi
 Each of those protagonists get their own deck of cards, which is separated in 2 sub decks : one for active situations (like fights), another for social actions (eg: a discussion between the protagonists while traveling to their next destination).
 
  The game is complete when either :
- 
+
 - all of the protagonists decks are empty (game over) ;
 - the conditions to trigger a game over are met (eg: protagonist performed action A, which caused XYZ, leading to a bad ending) ;
 - the user completes the storyline
