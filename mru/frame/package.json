@@ -1,0 +1,22 @@
+{
+  "name": "@playbook/frame",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "frog dev",
+    "debug": "frames",
+    "serve": "bun run src/index.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\""
+  },
+  "dependencies": {
+    "@xmtp/frames-validator": "^0.6.2",
+    "frog": "latest",
+    "hono": "^4"
+  },
+  "devDependencies": {
+    "@frames.js/debugger": "^0.3.11",
+    "@types/bun": "latest",
+    "bun": "latest",
+    "prettier": "^3.3.3"
+  }
+}
