@@ -1,8 +1,8 @@
 # @playbook/frame
 
-Frame to play with Playbook.
+Frame to play with Playbook. Built with Hono.
 
---- 
+---
 
 > Bootstrapped using [frog framework](https://frog.fm)
 
