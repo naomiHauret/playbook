@@ -1,0 +1,175 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Storyline Game Schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the storyline."
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description of the storyline."
+    },
+    "characters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the character."
+          },
+          "initial_role": {
+            "type": "string",
+            "enum": ["protagonist", "antagonist", "support"],
+            "description": "The initial role of the character in the storyline."
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the character."
+          },
+          "decks": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/definitions/card"
+                },
+                "description": "A collection of action cards for the character."
+              },
+              "social": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/definitions/card"
+                },
+                "description": "A collection of social cards for the character."
+              }
+            },
+            "required": ["action", "social"]
+          }
+        },
+        "required": ["name", "initial_role", "description", "decks"]
+      }
+    },
+    "initial_situations_pile": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/event"
+      },
+      "description": "The initial pile of events to start the storyline."
+    },
+    "events_deck": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/event"
+      },
+      "description": "The main deck of events that drive the storyline."
+    }
+  },
+  "required": ["title", "description", "characters", "initial_situations_pile", "events_deck"],
+  "definitions": {
+    "card": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the card."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the card's effect."
+        },
+        "influence": {
+          "type": "integer",
+          "description": "The influence value of the card."
+        },
+        "success_rate": {
+          "type": "integer",
+          "description": "The success rate of the card as a percentage (0-100)."
+        },
+        "influence_rate": {
+          "type": "integer",
+          "description": "The influence rate modifier as a percentage (0-100)."
+        }
+      },
+      "required": ["title", "description", "influence", "success_rate", "influence_rate"]
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the event."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the event."
+        },
+        "sequence": {
+          "type": "string",
+          "enum": ["initial", "action", "social", "mix", "idle", "final"],
+          "description": "The type of event sequence."
+        },
+        "effect": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "$ref": "#/definitions/eventEffect"
+            },
+            "social": {
+              "$ref": "#/definitions/eventEffect"
+            },
+            "resolution": {
+              "type": "object",
+              "properties": {
+                "influence_threshold": {
+                  "type": "integer",
+                  "description": "The influence threshold required to resolve the event."
+                },
+                "turn_limit": {
+                  "type": "integer",
+                  "description": "The number of turns allowed to resolve the event."
+                }
+              },
+              "required": ["influence_threshold", "turn_limit"]
+            }
+          },
+          "required": ["action", "social"]
+        }
+      },
+      "required": ["title", "description", "sequence", "effect"]
+    },
+    "eventEffect": {
+      "type": "object",
+      "properties": {
+        "draw": {
+          "$ref": "#/definitions/effectApplier"
+        },
+        "discard": {
+          "$ref": "#/definitions/effectApplier"
+        },
+        "fish": {
+          "$ref": "#/definitions/effectApplier"
+        }
+      },
+      "required": ["draw", "discard"]
+    },
+    "effectApplier": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "description": "The number of cards to draw or discard."
+        },
+        "cond": {
+          "type": ["string", "null"],
+          "enum": ["always", "success", "failure", null],
+          "description": "The condition under which the effect applies."
+        }
+      },
+      "required": ["value", "cond"]
+    }
+  }
+}

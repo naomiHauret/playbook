@@ -1,5 +1,5 @@
 import { Button, type FrameContext } from 'frog'
-import { API_ENDPOINT, ROUTES, STATE_PROPERTIES, type State } from '../utils'
+import { ROUTES, STATE_PROPERTIES, type State } from '../utils'
 import { type BlankInput } from 'frog/_lib/types/routes'
 
 export async function handlerFrameStoryline(
@@ -17,7 +17,7 @@ export async function handlerFrameStoryline(
   >,
 ) {
   if (c.transactionId) {
-    const raw = await fetch(`${API_ENDPOINT}/mru/bootstrap`, {
+    const raw = await fetch(`${process.env.API_ENDPOINT_URL}/mru/bootstrap`, {
       method: 'POST',
       body: JSON.stringify({
         storylineId: c.previousState.storylineId,
