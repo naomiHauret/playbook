@@ -1,0 +1,19 @@
+---
+export interface Props {
+  title: string
+  frameMetadata: Record<string, string>
+}
+const { title, frameMetadata } = Astro.props as Props
+---
+<html class="font-sans bg-neutral-1" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+		{Object.keys(frameMetadata).map(property => <meta property={property} content={frameMetadata[property]}/>)}
+	</head>
+	<body class="flex flex-col min-h-screen">
+		<slot />
+	</body>
+</html>

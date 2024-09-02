@@ -1,0 +1,68 @@
+---
+import Default from '~/layouts/Default.astro';
+import { getCollection } from 'astro:content';
+import { getFrameMetadata } from '@coinbase/onchainkit/frame';
+import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xmtp'; 
+import { xmtpClient } from '../../services';
+
+const storylines = await getCollection('storylines');
+
+let frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'Discover all storylines',
+      action: 'link',
+      target: `${Astro.url.origin}/storylines`,
+    },
+  ],
+  image: `${Astro.url.href}/index.og`,
+  isOpenFrame: true,
+  accepts: { xmtp: 'vNext' },
+})
+
+if(Astro.request.method === 'POST') {	
+	const body =  await Astro.request.json()
+  if (isXmtpFrameRequest(body)) {
+    const { isValid, message } = await getXmtpFrameMessage(body); 
+    const player = message?.verifiedWalletAddress
+    if (isValid && player) {
+      // Send all available storylines as frames to the player in their inbox
+      const conversation = await xmtpClient.conversations.newConversation(player)
+      await conversation.send(storylines.length > 1 ? `There are currently ${storylines.length} storylines you can play :` : `There is currently ${storylines.length} storyline you can play :`)
+      const storylinesFrames = [
+        ...storylines.map(async (entry: { data: { [x: string]: any; }; id: string | number; }) => {
+          const key = Object.keys(entry.data)[0]
+          const storyline = entry.data[key]
+
+          return await conversation.send(`~~ ${storyline.title} ~~\n\n"${storyline.description}"\n\nThis storyline requires you to hold ${Object.keys(storyline.characters).length} NFTs.\n\nTap the "Pick this storyline" button to start your next game with this storyline.\n\n${Astro.url.origin}/storylines/${entry.id}`.trim())
+        })
+      ]
+      await Promise.allSettled(storylinesFrames)
+    }
+  }
+}	
+
+---
+
+<Default title="Pick a storyline and play with your NFTs @ Playbook" frameMetadata={frameMetadata}>
+  <main class="max-w-2xl text-center mx-auto pt-20">
+    <section class="px-4">
+        <h1 class="text-neutral-12 font-serif text-4xl">It's time to wake your NFTs</h1>
+        <p class="text-xl leading-relaxed text-neutral-10 pt-6 pb-4">Try <span class="text-accent-11">Playbook</span>, a text-based RPG where your NFTs become the stars of unique adventures. </p>  
+        <p class="leading-relaxed font-serif italic text-2xl text-neutral-12">Pick a storyline</p>  
+    </section>
+
+    <ul class="py-3">
+      {storylines.map(entry => {
+      const id = Object.keys(entry.data)[0]
+      return <li class="font-serif text-5xl text-accent-11">
+        {id}
+      </li>})}
+    </ul>
+
+    <section class="pt-8 px-4">
+      <div class="font-serif text-neutral-12 italic text-2xl">Message <button class="font-sans font-normal text-lg bg-accent-3 px-[0.5em] py-[0.25em] rounded-lg text-accent-11">tryplaybook.converse.xyz</button> on your Converse Messenger or Coinbase Wallet app to get started.</div>
+    </section>
+
+  </main>
+</Default>

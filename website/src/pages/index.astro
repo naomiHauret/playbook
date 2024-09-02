@@ -1,0 +1,43 @@
+---
+import Default from "../layouts/Default.astro";
+import { getFrameMetadata } from '@coinbase/onchainkit/frame';
+
+const frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'Start playing',
+      action: 'post',
+      target: `${Astro.url.origin}/storylines`,
+    },
+    {
+      label: 'Rules',
+      target: `${Astro.url.origin}/rules`,
+    },
+  ],
+  image: `${Astro.url.href}index.og`,
+  postUrl: '/',
+  isOpenFrame: true,
+  accepts: { xmtp: 'vNext' },
+})
+
+---
+
+<Default title="Try Playbook - inline RPG with your NFTs as characters" frameMetadata={frameMetadata}>
+  <main class="max-w-2xl text-center mx-auto pt-20">
+    <section class="px-4">
+        <h1 class="text-neutral-12 font-serif text-4xl">It's time to wake your NFTs</h1>
+        <p class="text-xl leading-relaxed text-neutral-10 pt-6 pb-4">Try <span class="text-accent-11">Playbook</span>, a text-based RPG where your NFTs become the stars of unique adventures. </p>  
+        <p class="leading-relaxed font-serif text-2xl text-neutral-12">Pick a storyline, cast your NFTs in different roles, give them a personality type and let the narrator unroll the story as you decide what each character will do via a deck of cards - right in your XMTP inbox.</p>  
+    </section>
+    <section class="pt-8 px-4">
+      <div class="font-serif text-neutral-12 italic text-2xl">Message <button class="font-sans font-normal text-lg bg-accent-3 px-[0.5em] py-[0.25em] rounded-lg text-accent-11">tryplaybook.converse.xyz</button> on your Converse Messenger or Coinbase Wallet app to get started.</div>
+    </section>
+    <nav class="pt-12">
+      <ul class="[&_a]:underline [&_a]:cursor-pointer [&_a]:p-[1em] [&_a]:text-accent-8 [&_a:hover]:no-underline flex-wrap gap-x-2 gap-y-4 items-center justify-center italic">
+        <li><a>Storylines</a></li>
+        <li><a>How to play</a></li>
+        <li><a>Get Converse</a></li>
+      </ul>
+    </nav>
+  </main>
+</Default>
