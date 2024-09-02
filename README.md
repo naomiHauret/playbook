@@ -44,3 +44,11 @@ The game can end in one of several ways:
 - Successfully resolving all necessary events and completing the storyline.
 
 If the player manages to complete the storyline without a game over,  they will receive new cards in their decks.
+
+---
+[x] bootstrap game session
+[ ] cast NFT
+[ ] deploy game infra (narrative AI)
+[ ] start game
+[ ] gameplay rounds
+[ ] rewards distribution
