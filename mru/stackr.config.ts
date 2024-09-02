@@ -1,4 +1,4 @@
-import { DA, KeyPurpose, SignatureScheme, StackrConfig } from '@stackr/sdk'
+import { DA, KeyPurpose, SignatureScheme, type StackrConfig } from '@stackr/sdk'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -16,7 +16,7 @@ const stackrConfig: StackrConfig = {
   operator: {
     accounts: [
       {
-        privateKey: process.env.PRIVATE_KEY as string,
+        privateKey: process.env.MRU_PRIVATE_KEY as string,
         purpose: KeyPurpose.BATCH,
         scheme: SignatureScheme.ECDSA,
       },

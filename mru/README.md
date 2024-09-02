@@ -4,9 +4,9 @@ Micro-rollup for Playbook. Enable players to create game session for a storyline
 
 Interactions with the micro-rollup are facilitated by using [Elysia](https://elysiajs.com/) to create API endpoints.
 
-- `GET` `/api/storylines` : list of available storylines (might change later ; maybe one MRU per storyline would be better ?)
+- `GET` `/api/storylines` : list of available storylines
 - `GET` `/api/storyline/:id`: get storyline details
-- `POST` `/mru/bootstrap`: bootstraps a new save file for the player for a given storyline ; must be used by a frame via XMTP under the hood ;
+- `POST` `/mru/bootstrap`: bootstraps a new save file for the player for a given storyline
 
 ---
 

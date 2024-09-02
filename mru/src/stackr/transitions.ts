@@ -1,4 +1,4 @@
-import { STF, Transitions } from '@stackr/sdk/machine'
+import { type STF, type Transitions } from '@stackr/sdk/machine'
 import { PlaybookState } from './state'
 import { hashMessage } from 'ethers'
 

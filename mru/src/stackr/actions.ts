@@ -1,5 +1,13 @@
 import { ActionSchema, SolidityType } from '@stackr/sdk'
 
+enum MruActions {
+  bootstrap = 'bootstrapGame',
+  cast = 'castCharacter',
+  configureInfra = 'configureGameInfra',
+  startGame = 'startGame',
+  drawEvent = 'drawEvent',
+  playTurn = 'playTurn',
+}
 /**
  * Bootsrap a new game for a given storyline id
  */
@@ -64,12 +72,12 @@ const PlayTurnSchema = new ActionSchema('playTurn', {
 })
 
 export const schemas = {
-  bootstrapGame: BootstrapNewGameSchema,
-  castCharacter: CastCharacterSchema,
-  configureGameInfra: ConfigureGameInfraSchema,
-  startGame: StartGameSchema,
-  drawEvent: DrawEventSchema,
-  playTurn: PlayTurnSchema,
+  [MruActions.bootstrap]: BootstrapNewGameSchema,
+  [MruActions.cast]: CastCharacterSchema,
+  [MruActions.configureInfra]: ConfigureGameInfraSchema,
+  [MruActions.startGame]: StartGameSchema,
+  [MruActions.drawEvent]: DrawEventSchema,
+  [MruActions.playTurn]: PlayTurnSchema,
 }
 
 export {
@@ -79,4 +87,5 @@ export {
   StartGameSchema,
   DrawEventSchema,
   PlayTurnSchema,
+  MruActions,
 }

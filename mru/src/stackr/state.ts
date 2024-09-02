@@ -1,5 +1,5 @@
 import { State } from '@stackr/sdk/machine'
-import { BytesLike, solidityPackedKeccak256 } from 'ethers'
+import { type BytesLike, solidityPackedKeccak256 } from 'ethers'
 
 export interface StorylineCard {
   title: string
@@ -98,7 +98,8 @@ export interface GameSession {
 }
 
 export interface AppState {
-  storylines: Record<string, Storyline>
+  // storylines: Record<string, Storyline>
+  storylines: Array<string>
   players: Record<
     string,
     {
