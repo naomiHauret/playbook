@@ -1,5 +1,7 @@
 import { StateMachine } from '@stackr/sdk/machine'
-import * as genesis from '../../genesis-state.json'
+// import * as genesis from '../../genesis-state.json'
+import * as genesis from '../../with-session-bootstrapped.json'
+
 import { type AppState, PlaybookState } from './state'
 import { transitions } from './transitions'
 

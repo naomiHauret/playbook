@@ -25,7 +25,6 @@ const CastCharacterSchema = new ActionSchema('castCharacter', {
   characterId: SolidityType.STRING,
   personality: SolidityType.STRING,
   alignment: SolidityType.STRING,
-  role: SolidityType.STRING,
   nftName: SolidityType.STRING,
   nftId: SolidityType.STRING,
   nftContractAddress: SolidityType.ADDRESS,

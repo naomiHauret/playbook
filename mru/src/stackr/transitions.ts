@@ -1,9 +1,13 @@
 import { type STF, type Transitions } from '@stackr/sdk/machine'
 import { PlaybookState } from './state'
 import { hashMessage } from 'ethers'
+import arrayShuffle from 'array-shuffle'
 
 type BootstrapNewGameInput = { storylineId: string; timestamp: number }
 
+/**
+ * Bootstraps (create a barebone version) a new game session for the signer for a given storyline
+ */
 const bootstrapGame: STF<PlaybookState, BootstrapNewGameInput> = {
   handler: ({ state, inputs, msgSender, block, emit }) => {
     // Initialize the player's games if not already present
@@ -36,6 +40,7 @@ const bootstrapGame: STF<PlaybookState, BootstrapNewGameInput> = {
       last_updated_at: 0,
       finished_at: 0,
       galadriel_contract_address: '',
+      events_discard_pile: [],
       characters: {},
       current_event: {
         id: '',
@@ -51,6 +56,90 @@ const bootstrapGame: STF<PlaybookState, BootstrapNewGameInput> = {
         gameId,
         storylineId: inputs.storylineId,
         player: msgSender,
+        timestamp: inputs.timestamp,
+      },
+    })
+
+    return state
+  },
+}
+
+type CastCharacterInput = {
+  storylineId: string
+  gameId: string
+  characterId: string
+  personality: string
+  alignment: string
+  nftName: string
+  nftId: string
+  nftContractAddress: string
+  chainId: string
+  timestamp: number
+}
+
+/**
+ * Casts a NFT as a character
+ */
+const castCharacter: STF<PlaybookState, CastCharacterInput> = {
+  handler: ({ state, inputs, msgSender, block, emit }) => {
+    const {
+      gameId,
+      storylineId,
+      characterId,
+      personality,
+      alignment,
+      timestamp,
+      nftName,
+      chainId,
+      nftContractAddress,
+      nftId,
+    } = inputs
+    const storyline = state.storylines[storylineId]
+    const character = storyline.characters[characterId]
+
+    // Initialize randomized decks and creates drawing piles and hands from it
+    const actionDeck = arrayShuffle(Object.keys(character.decks.action))
+    const actionHand = actionDeck.splice(0, 3)
+    const socialDeck = arrayShuffle(Object.keys(character.decks.social))
+    const socialHand = socialDeck.splice(0, 3)
+
+    // Register casted character in the session
+    state.players[msgSender].games[inputs.storylineId].sessions[gameId].characters[characterId] = {
+      nftContractAddress,
+      nftId,
+      nftName,
+      chainId,
+      personality,
+      alignment,
+      role: character.initial_role,
+      hand: [...actionHand, ...socialHand],
+      decks: {
+        action: {
+          draw_pile: actionDeck,
+          discard_pile: [],
+        },
+        social: {
+          draw_pile: socialDeck,
+          discard_pile: [],
+        },
+      },
+    }
+
+    state.players[msgSender].games[inputs.storylineId].sessions[gameId].last_updated_at = timestamp
+    emit({
+      name: 'CharacterCasted',
+      value: {
+        gameId,
+        characterId,
+        storylineId,
+        nftId,
+        nftName,
+        chainId,
+        nftContractAddress,
+        personality,
+        alignment,
+        player: msgSender,
+        timestamp,
       },
     })
 
@@ -60,4 +149,5 @@ const bootstrapGame: STF<PlaybookState, BootstrapNewGameInput> = {
 
 export const transitions: Transitions<PlaybookState> = {
   bootstrapGame,
+  castCharacter,
 }

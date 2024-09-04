@@ -9,9 +9,8 @@ export async function fetchStoryline(params: {
   const exists = await file.exists()
 
   if (!state.storylines.includes(storylineId) || !exists) {
-    const storyline: Record<string, Storyline> = await file.json()
-    const key = Object.keys(storyline)[0]
-    return storyline[key]
+    const storyline: Storyline = await file.json()
+    return storyline
   }
 
   throw new Error("This storyline doesn't exist or was deleted.")

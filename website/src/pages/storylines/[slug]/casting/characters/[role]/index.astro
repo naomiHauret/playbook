@@ -1,0 +1,333 @@
+---
+import Default from '~/layouts/Default.astro'
+import { getEntry } from 'astro:content'
+import { getFrameMetadata } from '@coinbase/onchainkit/frame'
+import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xmtp'
+import { getFrameState } from '~/utils/frame-state'
+import { getAllNftsByAddress, type OpenseaNfts } from '~/services/opeansea/getAllNftsByAddress'
+import type { Storyline } from 'src/content/config'
+import { xmtpClient } from '~/services/xmtp/client'
+import { ALIGNMENTS_DESCRIPTIONS, ALIGNMNENTS, PERSONALITY_TYPES } from '~/utils/characters'
+
+/**
+ * Casting an NFT as a character
+ *
+ * 1. Player opens an external page that lists their NFTs. Player taps on the NFT to copy the code
+ * 2. Player pastes the code back in the frame and continue to the next step (assign personality)
+ * 3. Player types the personality code after receiving the list of personality codes in their inbox
+ * 4. Player types the alignment code after receiving the list of alignment codes in their inbox
+ * 5. Player signs the message in to wallet to confirm their custom casting choice (NFT, personality, alignment)
+ */
+
+const { slug, role } = Astro.params
+const entry = await getEntry('storylines', slug!!)
+
+if (!entry?.data || !entry?.data?.characters?.[role!!]) return Astro.redirect('/not-found')
+const storyline: Storyline = entry?.data!!
+const character = storyline.characters[role!!]
+const game = Astro.url.searchParams.get('gameId')
+const wallet = Astro.url.searchParams.get('wallet')
+
+// Default metadata
+let frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'Open NFTs & get code',
+      action: 'post_redirect',
+      postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+    },
+    {
+      label: 'Continue with this NFT',
+      action: 'post',
+      postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+    },
+  ],
+  input: {
+    text: 'NFT Code',
+  },
+  state: {
+    currentStep: 1,
+    storylineId: slug,
+    characterId: role,
+    gameId: game,
+    timestamp: Date.now(),
+  },
+  image: `${Astro.url.href}index.og`,
+  isOpenFrame: true,
+  accepts: { xmtp: 'vNext' },
+  postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+})
+let player: string | undefined
+let nfts: Record<string, OpenseaNfts[]> = {}
+
+if (Astro.request.method === 'GET' && wallet) {
+  // we use Opensea API to get the player's NFTs
+  nfts = await getAllNftsByAddress(wallet!!)
+} else if (Astro.request.method === 'POST') {
+  const body = await Astro.request.json()
+  if (isXmtpFrameRequest(body)) {
+    const { isValid, message } = await getXmtpFrameMessage(body)
+
+    const txId = message?.transactionId
+    const inputText = message?.inputText
+    player = message?.verifiedWalletAddress
+    const {
+      storylineId,
+      gameId,
+      characterId,
+      currentStep,
+      timestamp,
+      personality,
+      alignment,
+      pickedNft,
+    } = getFrameState(message?.state!!)
+    const conversation = await xmtpClient.conversations.newConversation(player!!)
+
+    // Player submitted their casting choice for this character (nft, personality, alignment)
+    if (txId && personality && storylineId && gameId && pickedNft && player && alignment) {
+      // Cast nft as character
+      const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/cast`, {
+        method: 'POST',
+        body: JSON.stringify({
+          gameId,
+          storylineId,
+          characterId,
+          personality,
+          alignment,
+          nftName: pickedNft.name,
+          chainId: pickedNft.chain,
+          nftContractAddress: pickedNft.contract,
+          nftId: pickedNft.identifier,
+          timestamp,
+          signature: txId,
+          player,
+        }),
+      })
+
+      const { idNextCharacterToCast, casted } = await raw.json()
+      console.log(idNextCharacterToCast, casted)
+      if (idNextCharacterToCast !== null) {
+        const characterToCast = storyline.characters[idNextCharacterToCast]
+        let roleDescriptor = 'a protagonist (you control the actions of this character).'
+        switch (characterToCast.initial_role) {
+          case 'antagonist':
+            roleDescriptor = 'an antagonist (you have to defeat this character).'
+            break
+          case 'support':
+            roleDescriptor =
+              "a support character (you don't control the actions of this character)."
+            break
+          default:
+            break
+        }
+        let characterText = `# ${characterToCast.name} #\n\n"${characterToCast.description}"\n\nIn this storyline, this character is ${roleDescriptor}\n\n\nWhich of your NFT do you want to cast as "${characterToCast.name}" ?\n\n${Astro.url.href}/casting/characters/${idNextCharacterToCast}?gameId=${gameId}`
+        conversation.send(`Let's cast the next character.\n\n\n${characterText}\n\n`)
+      } else {
+        conversation.send(
+          `Your casting is complete ! Now, let's create the narrator. After this you'll be all set up to start playing !\n\n${Astro.url.origin}/narrator?storylineId=${storylineId}&gameId=${gameId}`,
+        )
+      }
+
+      // add option to change this cast
+      frameMetadata = getFrameMetadata({
+        image: `${Astro.url.href}/casted.og`,
+        isOpenFrame: true,
+        accepts: { xmtp: 'vNext' },
+      })
+    } else {
+      if (!inputText || inputText.trim() === '')
+        return Astro.redirect(`${Astro.url.href}&wallet=${player}`, 302)
+
+      switch (currentStep) {
+        case 1:
+          // Personality code
+          const submittedNftCode = JSON.parse(decodeURI(inputText))
+          frameMetadata = getFrameMetadata({
+            buttons: [
+              {
+                label: 'Assign this personality',
+                action: 'post',
+                postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+              },
+            ],
+            input: {
+              text: 'Personality code',
+            },
+            state: {
+              storylineId: slug,
+              characterId: role,
+              pickedNft: submittedNftCode,
+              gameId: game,
+              timestamp: +timestamp,
+              currentStep: 2,
+            },
+            image: `${Astro.url.href}index.og`,
+            isOpenFrame: true,
+            accepts: { xmtp: 'vNext' },
+            postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+          })
+          conversation.send(
+            `Here are the different personality codes:\n\n${PERSONALITY_TYPES.map((personality, index) => `${index}: ${personality}\n`).join('')}\n\nType the personality code you want to use for this character in the frame input. For instance, input 3 for ${PERSONALITY_TYPES[3]}.`,
+          )
+
+          break
+        // Alignment code
+        case 2:
+          frameMetadata = getFrameMetadata({
+            buttons: [
+              {
+                label: 'Assign this alignment',
+                action: 'post',
+                postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+              },
+            ],
+            input: {
+              text: 'Alignment code',
+            },
+            state: {
+              storylineId: slug,
+              characterId: role,
+              personality: PERSONALITY_TYPES[+inputText],
+              pickedNft,
+              gameId: game,
+              timestamp: +timestamp,
+              currentStep: 3,
+            },
+            image: `${Astro.url.href}index.og`,
+            isOpenFrame: true,
+            accepts: { xmtp: 'vNext' },
+            postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+          })
+          conversation.send(
+            `Here are the different alignment codes:\n\n${ALIGNMNENTS.map((_alignement, index) => `${index}: ${_alignement} ;\n ${ALIGNMENTS_DESCRIPTIONS[_alignement]}\n\n`).join('')}\n\nType the alignment code you want to use for this character in the frame input. For instance, input 3 for ${ALIGNMNENTS[3]}.`,
+          )
+          break
+        // Alignment
+        case 3:
+          frameMetadata = getFrameMetadata({
+            buttons: [
+              {
+                label: 'Cast this nft',
+                action: 'tx',
+                target: `${Astro.url.origin}/frames/sign-cast-character`,
+              },
+            ],
+            state: {
+              storylineId: slug,
+              characterId: role,
+              personality,
+              alignment: ALIGNMNENTS[+inputText],
+              pickedNft,
+              gameId: game,
+              timestamp: +timestamp,
+              currentStep: 4,
+            },
+            image: `${Astro.url.href}index.og`,
+            isOpenFrame: true,
+            accepts: { xmtp: 'vNext' },
+            postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+          })
+
+          break
+      }
+    }
+  }
+}
+---
+
+<Default title="Play with your NFTs @ Playbook" frameMetadata={frameMetadata}>
+  <div class="max-w-2xl text-center mx-auto pt-20">
+    <section class="px-4">
+      <h1 class="text-neutral-12 font-serif text-4xl">Cast your NFT for this character</h1>
+    </section>
+    <section class="leading-relaxed">
+      <h1 class="pb-4 text-accent-12 font-serif text-5xl font-bold">{character?.name}</h1>
+      <p class="text-accent-11 italic text-2xl">{character?.description}</p>
+    </section>
+    <section class="pt-8 px-4">
+      <div class="font-serif text-neutral-10 text-lg">
+        <p class="text-neutral-11 italic pb-2">
+          <span class="font-bold">Tap</span> on the NFT you want to cast for this character and paste
+          the code in the associated casting frame in your conversation with <span
+            class="font-sans font-normal text-sm bg-accent-3 px-[0.5em] py-[0.25em] rounded-lg text-accent-11"
+            >tryplaybook.converse.xyz</span
+          > on your Converse Messenger or Coinbase Wallet app.
+        </p>
+      </div>
+    </section>
+    <section class="pt-6 max-w-screen-xl w-full @container px-4 mx-auto">
+      <ul
+        x-data={`{
+      copied: '',
+      copy(code) {
+        navigator.clipboard.writeText(code);
+        this.copied = code;
+      }
+    }`}
+        class="grid @sm:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 gap-4 w-full"
+      >
+        {
+          Object.keys(nfts).map((chain) => {
+            return nfts[chain]
+              ?.filter((nft) => nft?.name?.length > 0 && nft?.image_url?.length > 0)
+              .map((nft) => {
+                return (
+                  <li
+                    x-data={`{ nft: "${encodeURI(
+                      JSON.stringify({
+                        chain,
+                        name: nft.name,
+                        image_url: nft.image_url,
+                        contract: nft.contract,
+                        identifier: nft.identifier,
+                      }),
+                    )}" }`}
+                    class="relative flex flex-col text-center overflow-hidden font-bold bg-white border border-neutral-4 rounded-md text-neutral-12 text-xl"
+                  >
+                    <div class="bg-neutral-4 min-h-36 aspect-video relative w-full">
+                      <img
+                        class="h-full blur-lg absolute inset-0 z-0 object-cover w-full"
+                        src={nft?.image_url}
+                      />
+                      <img
+                        class="h-32 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] w-auto rounded-lg"
+                        src={nft?.image_url}
+                      />
+                    </div>
+                    <p class="my-auto px-3 pt-8 pb-6">
+                      <span class="text-accent-12 text-sm font-bold font-sans">{nft?.name}</span>
+                    </p>
+                    <div
+                      x-cloak
+                      x-show="copied == nft"
+                      x-transition
+                      class="text-xs text-neutral-10 p-3"
+                    >
+                      <>
+                        <span class="text-accent-11 block pb-1 font-bold">Code copied !</span>
+                        <span class="font-normal italic text-neutral-11">
+                          Paste this code in{' '}
+                          <span class="text-accent-12 bg-accent-3 ">"{character?.name}"</span>{' '}
+                          casting frame.
+                        </span>
+                      </>
+                    </div>
+
+                    <button
+                      x-on:click={`copy(nft)`}
+                      class="cursor-pointer absolute inset-0 w-full h-full z-10 opacity-0"
+                    >
+                      Pick {nft?.name} to play {character.name}
+                    </button>
+                  </li>
+                )
+              })
+          })
+        }
+      </ul>
+      <p class="italic p-6 text-neutral-10 text-center text-xs">
+        NFTs data are provided by Opensea
+      </p>
+    </section>
+  </div></Default
+>

@@ -1,10 +1,17 @@
 # @playbook/website
 
-Website + frames for Playbook. 
+Website + frames for Playbook.
 The frame allows inline interactions on a XMTP client, with enhanced accessibility via direct messaging.
 
 - website: server-rendered, built with Astro ;
 - frames: built with onchainkit/frames, with first-class support for XMTP ;
+
+## Getting started
+
+- Install dependencies with `bun install` (or `npm install`/`pnpm install`/`yarn install`)
+- Copy `.env.dist` to `.env` and replace the values accordingly ;
+- Start with `bun run dev` ; the website should be accessible at `localhost:4321`
+- Start frames debugger with `bun run frames` ; you can access the debugger and preview frames at `localhost:3010`
 
 ---
 

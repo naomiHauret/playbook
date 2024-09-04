@@ -1,8 +1,7 @@
-import { html } from "satori-html";
-import satori from "satori";
-import sharp from "sharp";
-import { getFonts } from "../../utils";
-
+import { html } from 'satori-html'
+import satori from 'satori'
+import sharp from 'sharp'
+import { getFonts } from '../../utils'
 
 const generateOgImage = async (): Promise<Buffer> => {
   const markup = html(`
@@ -12,30 +11,30 @@ const generateOgImage = async (): Promise<Buffer> => {
 
       <span style="font-size:90px; font-family:'Tinos';">This is a placeholder (storylines page).</span>
 
-  </div>`);
+  </div>`)
 
-	const fonts = getFonts()
-  
+  const fonts = getFonts()
+
   const svg = await satori(markup as React.ReactNode, {
     width: 1200,
     height: 630,
     //@ts-ignore
     fonts,
-  });
+  })
 
-  const sharpSvg = Buffer.from(svg);
+  const sharpSvg = Buffer.from(svg)
 
-  const buffer = await sharp(sharpSvg).toBuffer();
+  const buffer = await sharp(sharpSvg).toBuffer()
 
-  return buffer;
-};
+  return buffer
+}
 
 export async function GET() {
-  const response = await generateOgImage();
+  const response = await generateOgImage()
   return new Response(response, {
     status: 200,
     headers: {
-      "Content-Type": "image/png",
+      'Content-Type': 'image/png',
     },
-  });
-};
+  })
+}

@@ -1920,5 +1920,33 @@
       }
     }
   },
-  "players": {}
+  "players": {
+    "0x44817B9B9d0b7Cd4aC7Eb7fb53E3184c4FAC0fb0": {
+      "games": {
+        "the-enchanted-forest": {
+          "decks_extra_cards": {},
+          "sessions": {
+            "0x9b0700dcbb28662aa1f8bdcf9359e3aabdb071554b5aae48cbebcedfc80602ae": {
+              "status": "preparing",
+              "created_at": 0,
+              "started_at": 0,
+              "last_updated_at": 0,
+              "finished_at": 0,
+              "galadriel_contract_address": "" ,
+              "events_discard_pile": [], 
+              "characters": {},
+              "current_event": {
+                "id": "",
+                "current_influence_score": 0,
+                "current_turn": 0,
+                "play_order": []
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+

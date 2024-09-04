@@ -7,22 +7,15 @@ import {
   MruActions,
 } from './stackr'
 import { ActionConfirmationStatus } from '@stackr/sdk'
-import { fetchStoryline } from './helpers/fetch-storyline'
 
 export enum SERVER_ROUTES_GROUPS_PREFIX {
-  restApi = '/api',
   mru = '/mru',
-}
-
-export enum ROUTES_REST_API {
-  getAllStorylines = '/storylines',
-  getStoryline = '/storyline/:id',
 }
 
 export enum ROUTES_MRU {
   info = '/info',
   bootstrapGame = '/bootstrap',
-  cast = '/castRole',
+  cast = '/cast',
 }
 
 /**
@@ -31,32 +24,6 @@ export enum ROUTES_MRU {
 export async function main() {
   const mru = await initializeMicroRollup()
 
-  /**
-   * API routes
-   */
-  const restApiRoutes = new Elysia({ prefix: SERVER_ROUTES_GROUPS_PREFIX.restApi }).get(
-    ROUTES_REST_API.getStoryline,
-    async ({ params: { id } }) => {
-      const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
-      if (!machine) {
-        throw new Error('Machine not found')
-      }
-      const { state } = machine
-      const storyline = await fetchStoryline({ state, storylineId: id })
-      return {
-        storyline: {
-          id,
-          title: storyline.title,
-          description: storyline.description,
-          roles: Object.keys(storyline.characters).map((characterId) => ({
-            archetype: storyline.characters[characterId].name,
-            description: storyline.characters[characterId].description,
-            role: storyline.characters[characterId].initial_role,
-          })),
-        },
-      }
-    },
-  )
   /**
    * MRU routes
    */
@@ -94,11 +61,11 @@ export async function main() {
         type: 'json',
       },
     )
+    /**
+     * Bootstrap new session for a given storyline
+     */
     .post(
       ROUTES_MRU.bootstrapGame,
-      /**
-       * Bootstrap new session for a given storyline
-       */
       async ({ body }) => {
         try {
           const inputs = {
@@ -142,8 +109,80 @@ export async function main() {
         }),
       },
     )
+    /**
+     * Cast character
+     */
+    .post(
+      ROUTES_MRU.cast,
+      async ({ body }) => {
+        try {
+          const inputs = {
+            gameId: body.gameId,
+            storylineId: body.storylineId,
+            characterId: body.characterId,
+            personality: body.personality,
+            alignment: body.alignment,
+            nftName: body.nftName,
+            chainId: body.chainId,
+            nftContractAddress: body.nftContractAddress,
+            nftId: body.nftId,
+            timestamp: +body.timestamp,
+          }
+          const castCharacter = schemas.castCharacter.actionFrom({
+            inputs,
+            signature: body.signature,
+            msgSender: body.player,
+          })
+
+          const ack = await mru.submitAction(MruActions.cast, castCharacter)
+
+          // leverage the ack to wait for C1 and access logs & error from STF execution
+          const { logs, errors } = await ack.waitFor(ActionConfirmationStatus.C1)
+
+          const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+          if (!machine) {
+            throw new Error('Machine not found')
+          }
+          const { state } = machine
+          const completeCast = Object.keys(state.storylines[body.storylineId].characters)
+          const sessionCast = Object.keys(
+            state.players[body.player].games[body.storylineId].sessions[body.gameId].characters,
+          )
+          const leftToCast = completeCast.filter((character) => !sessionCast.includes(character))
+          const nextCharacterToCast = leftToCast.length > 0 ? leftToCast[0] : null
+
+          // Return the casted character, along with the id next character to cast
+          return {
+            idNextCharacterToCast: nextCharacterToCast,
+            casted:
+              state.players[body.player].games[body.storylineId].sessions[body.gameId].characters[
+                body.characterId
+              ],
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      },
+      {
+        type: 'json',
+        body: t.Object({
+          player: t.String(),
+          storylineId: t.String(),
+          gameId: t.String(),
+          characterId: t.String(),
+          personality: t.String(),
+          alignment: t.String(),
+          nftName: t.String(),
+          nftContractAddress: t.String(),
+          nftId: t.String(),
+          chainId: t.String(),
+          signature: t.String(),
+          timestamp: t.Number(),
+        }),
+      },
+    )
+
   new Elysia()
-    .use(restApiRoutes)
     .use(mruRoutes)
     .get('/', () => 'Hello Elysia')
     .listen(3000)
