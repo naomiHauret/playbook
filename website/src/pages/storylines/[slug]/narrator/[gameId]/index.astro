@@ -1,0 +1,164 @@
+---
+import { getXmtpFrameMessage, isXmtpFrameRequest } from '@coinbase/onchainkit/xmtp'
+import Default from '../../../../../layouts/Default.astro'
+import { getFrameMetadata } from '@coinbase/onchainkit/frame'
+import { getFrameState } from '~/utils/frame-state'
+import { xmtpClient } from '~/services/xmtp'
+
+const { slug, gameId } = Astro.params
+const contract = Astro.url.searchParams.get('contract')
+const status = Astro.url.searchParams.get('status')
+
+let player
+
+/**
+ * Creating a narrator
+ *
+ * 1. Player clicks on a button that calls an endpoint that will deploy the narrator contract
+ * 2. When the deployment is successful, the backend sends a frame with a tx button to register this contract as the narrator in the game session
+ * 3. Player signs the message in to wallet to confirm the registration of their narrator
+ */
+
+let frameMetadata
+
+if (contract === null) {
+  frameMetadata = getFrameMetadata({
+    buttons: [
+      {
+        label: 'Create my narrator',
+        action: 'post',
+        target: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}?status=triggered`,
+      },
+    ],
+    state: {
+      storylineId: slug,
+      gameId: gameId,
+    },
+    image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/idle.og`,
+    isOpenFrame: true,
+    accepts: { xmtp: 'vNext' },
+  })
+} else {
+  frameMetadata = getFrameMetadata({
+    buttons: [
+      {
+        label: 'Link narrator',
+        action: 'tx',
+        target: `${Astro.url.origin}/frames/sign-deploy-infra`,
+      },
+    ],
+    state: {
+      storylineId: slug,
+      gameId: gameId,
+      contract,
+      timestamp: Date.now(),
+    },
+    image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/link.og`,
+    isOpenFrame: true,
+    accepts: { xmtp: 'vNext' },
+  })
+}
+
+if (Astro.request.method === 'POST') {
+  const body = await Astro.request.json()
+  if (isXmtpFrameRequest(body)) {
+    const { isValid, message } = await getXmtpFrameMessage(body)
+
+    const txId = message?.transactionId
+    player = message?.verifiedWalletAddress
+    const conversation = await xmtpClient.conversations.newConversation(player!!)
+
+    const { storylineId, gameId, timestamp } = getFrameState(message?.state!!)
+
+    if (txId) {
+      const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/configure-infra`, {
+        method: 'POST',
+        body: JSON.stringify({
+          gameId,
+          storylineId,
+          timestamp: +timestamp,
+          signature: txId,
+          player,
+          aiContractAddress: contract,
+        }),
+      })
+      const { status } = await raw.json()
+      if (status === 'deployed') conversation.send('Your adventure begins...')
+      frameMetadata = getFrameMetadata({
+        image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/ready.og`,
+        isOpenFrame: true,
+        accepts: { xmtp: 'vNext' },
+      })
+    } else {
+      fetch(`${Astro.url.origin}/frames/tx-deploy-narrator`, {
+        method: 'POST',
+        body: JSON.stringify({
+          player,
+          storylineId,
+          gameId,
+        }),
+      })
+      conversation.send(
+        "Your narrator is on its way. I'll let you now when it's creation is complete !",
+      )
+      frameMetadata = getFrameMetadata({
+        buttons: [
+          {
+            action: 'link',
+            target: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}?status=deploying`,
+            label: 'Open creation status page',
+          },
+        ],
+        state: {
+          storylineId: slug,
+          gameId: gameId,
+        },
+        image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/deploying.og`,
+        isOpenFrame: true,
+        accepts: { xmtp: 'vNext' },
+      })
+    }
+  }
+}
+---
+
+<Default
+  title="Try Playbook - inline RPG with your NFTs as characters"
+  frameMetadata={frameMetadata}
+>
+  <main class="max-w-2xl text-center mx-auto pt-20">
+    <section class="px-4">
+      <h1 class="text-neutral-12 font-serif text-4xl">It's time to wake your NFTs</h1>
+      <p class="text-xl leading-relaxed text-neutral-10 pt-6 pb-4">
+        Try <span class="text-accent-11">Playbook</span>, a text-based RPG where your NFTs become
+        the stars of unique adventures.
+      </p>
+      <p class="leading-relaxed font-serif text-2xl text-neutral-12">
+        Pick a storyline, cast your NFTs in different roles, give them a personality type and let
+        the narrator unroll the story as you decide what each character will do via a deck of cards
+        - right in your XMTP inbox.
+      </p>
+    </section>
+    <section
+      x-data={`{
+      narratorStatusText: "Get yours now." }'  
+    }
+    `}
+      class="leading-relaxed"
+    >
+      <h1 class="pb-4 text-accent-12 font-serif text-5xl font-bold">
+        All great stories need a narrator.
+      </h1>
+      <p x-text="narratorStatusText" class="text-accent-11 italic text-2xl">Create yours.</p>
+    </section>
+
+    <section class="pt-8 px-4">
+      <div class="font-serif text-neutral-12 italic text-2xl">
+        Paste the URL of this page in <button
+          class="font-sans font-normal text-lg bg-accent-3 px-[0.5em] py-[0.25em] rounded-lg text-accent-11"
+          >tryplaybook.converse.xyz</button
+        > on your Converse Messenger or Coinbase Wallet app to create and register your narrator.
+      </div>
+    </section>
+  </main>
+</Default>

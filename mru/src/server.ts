@@ -16,6 +16,7 @@ export enum ROUTES_MRU {
   info = '/info',
   bootstrapGame = '/bootstrap',
   cast = '/cast',
+  configureInfra = '/configure-infra',
 }
 
 /**
@@ -181,7 +182,56 @@ export async function main() {
         }),
       },
     )
+    /**
+     * Link deployed LLM narrator contract address
+     */
+    .post(
+      ROUTES_MRU.configureInfra,
+      async ({ body }) => {
+        try {
+          const inputs = {
+            aiContractAddress: body.aiContractAddress,
+            storylineId: body.storylineId,
+            gameId: body.gameId,
+            timestamp: +body.timestamp,
+          }
 
+          const configureGameInfra = schemas.configureGameInfra.actionFrom({
+            inputs,
+            signature: body.signature,
+            msgSender: body.player,
+          })
+
+          const ack = await mru.submitAction(MruActions.configureInfra, configureGameInfra)
+
+          // leverage the ack to wait for C1 and access logs & error from STF execution
+          const { logs, errors } = await ack.waitFor(ActionConfirmationStatus.C1)
+
+          const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+          if (!machine) {
+            throw new Error('Machine not found')
+          }
+          const { state } = machine
+
+          return {
+            status: state.players[body.player].games[body.storylineId].sessions[body.gameId].status,
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      },
+      {
+        type: 'json',
+        body: t.Object({
+          player: t.String(),
+          storylineId: t.String(),
+          gameId: t.String(),
+          aiContractAddress: t.String(),
+          signature: t.String(),
+          timestamp: t.Number(),
+        }),
+      },
+    )
   new Elysia()
     .use(mruRoutes)
     .get('/', () => 'Hello Elysia')

@@ -4,8 +4,8 @@ import { getEntry } from 'astro:content'
 import { getFrameMetadata } from '@coinbase/onchainkit/frame'
 import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xmtp'
 import { getFrameState } from '~/utils/frame-state'
-import { getAllNftsByAddress, type OpenseaNfts } from '~/services/opeansea/getAllNftsByAddress'
-import type { Storyline } from 'src/content/config'
+import { getAllNftsByAddress, type OpenseaNfts } from '~/services/opensea/getAllNftsByAddress'
+import { type Storyline } from 'src/content/config'
 import { xmtpClient } from '~/services/xmtp/client'
 import { ALIGNMENTS_DESCRIPTIONS, ALIGNMNENTS, PERSONALITY_TYPES } from '~/utils/characters'
 
@@ -52,7 +52,7 @@ let frameMetadata = getFrameMetadata({
     gameId: game,
     timestamp: Date.now(),
   },
-  image: `${Astro.url.href}index.og`,
+  image: `${Astro.url.href}/index.og`,
   isOpenFrame: true,
   accepts: { xmtp: 'vNext' },
   postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
@@ -105,7 +105,6 @@ if (Astro.request.method === 'GET' && wallet) {
       })
 
       const { idNextCharacterToCast, casted } = await raw.json()
-      console.log(idNextCharacterToCast, casted)
       if (idNextCharacterToCast !== null) {
         const characterToCast = storyline.characters[idNextCharacterToCast]
         let roleDescriptor = 'a protagonist (you control the actions of this character).'
@@ -130,7 +129,7 @@ if (Astro.request.method === 'GET' && wallet) {
 
       // add option to change this cast
       frameMetadata = getFrameMetadata({
-        image: `${Astro.url.href}/casted.og`,
+        image: `${Astro.url.href}casted.og`,
         isOpenFrame: true,
         accepts: { xmtp: 'vNext' },
       })
@@ -161,7 +160,7 @@ if (Astro.request.method === 'GET' && wallet) {
               timestamp: +timestamp,
               currentStep: 2,
             },
-            image: `${Astro.url.href}index.og`,
+            image: `${Astro.url.href}/index.og`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
             postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
@@ -193,7 +192,7 @@ if (Astro.request.method === 'GET' && wallet) {
               timestamp: +timestamp,
               currentStep: 3,
             },
-            image: `${Astro.url.href}index.og`,
+            image: `${Astro.url.href}/index.og`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
             postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
@@ -222,7 +221,7 @@ if (Astro.request.method === 'GET' && wallet) {
               timestamp: +timestamp,
               currentStep: 4,
             },
-            image: `${Astro.url.href}index.og`,
+            image: `${Astro.url.href}/index.og`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
             postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,

@@ -147,7 +147,43 @@ const castCharacter: STF<PlaybookState, CastCharacterInput> = {
   },
 }
 
+type ConfigureInfraInput = {
+  storylineId: string
+  gameId: string
+  aiContractAddress: string
+  timestamp: number
+}
+
+/**
+ * Link narrator AI + other infra
+ */
+const configureGameInfra: STF<PlaybookState, ConfigureInfraInput> = {
+  handler: ({ state, inputs, msgSender, block, emit }) => {
+    const { gameId, storylineId, aiContractAddress, timestamp } = inputs
+
+    // Register casted character in the session
+    state.players[msgSender].games[inputs.storylineId].sessions[gameId].galadriel_contract_address =
+      aiContractAddress
+    state.players[msgSender].games[inputs.storylineId].sessions[gameId].last_updated_at = timestamp
+    state.players[msgSender].games[inputs.storylineId].sessions[gameId].status = 'ready'
+
+    emit({
+      name: 'NarratorContractLinked',
+      value: {
+        storylineId,
+        gameId,
+        aiContractAddress,
+        player: msgSender,
+        timestamp,
+      },
+    })
+
+    return state
+  },
+}
+
 export const transitions: Transitions<PlaybookState> = {
   bootstrapGame,
   castCharacter,
+  configureGameInfra,
 }
