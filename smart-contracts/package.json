@@ -8,6 +8,8 @@
     "compile": "npx hardhat compile",
     "playground:deploy": "bun run playground/narrator/features/deploy.ts",
     "playground:startGame": "bun run playground/narrator/features/start-game.ts",
+    "playground:turn": "bun run playground/narrator/features/play-sequence-turn.ts",
+    "playground:history": "bun run playground/narrator/features/read-history.ts",
     "generateStandardJson": "npx hardhat solidity-json",
     "format": "prettier --write \"**/*.{ts,md,json,js}\" \"contracts/**/*.sol\""
   },

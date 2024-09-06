@@ -1,4 +1,4 @@
-import { abi } from '../../../artifacts/contracts/Narrator.sol/PlaybookNarrator.json'
+import { abi } from '../../../artifacts/contracts/Narrator-Opus.sol/PlaybookNarrator.json'
 import { getContract } from 'viem'
 import * as enchantedForestStoryline from '../the-enchanted-forest.json'
 import * as mruState from '../with-dumb-narrator.json'
@@ -33,15 +33,15 @@ async function playSequenceTurn(narratorContractAddress: `0x${string}`, chatId: 
         ? {
             // @ts-ignore
             title: enchantedForestStoryline.characters[character].decks.action[card].title,
-            // @ts-ignore
             description:
+              // @ts-ignore
               enchantedForestStoryline.characters[character].decks.action[card].description,
           }
         : {
             // @ts-ignore
             title: enchantedForestStoryline.characters[character].decks.social[card].title,
-            // @ts-ignore
             description:
+              // @ts-ignore
               enchantedForestStoryline.characters[character].decks.social[card].description,
           }
       return {

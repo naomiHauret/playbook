@@ -2,7 +2,7 @@ import { deployerAccount, deployerWalletClient, ORACLE_ADDRESS, publicClient } f
 import { createSystemPrompt } from '../prompts'
 import * as enchantedForestStoryline from '../the-enchanted-forest.json'
 import * as mruState from '../with-dumb-narrator.json'
-import { abi, bytecode } from '../Narrator.json'
+import { abi, bytecode } from '../../../artifacts/contracts/Narrator-Opus.sol/PlaybookNarrator.json'
 
 async function deploy() {
   const prompt = createSystemPrompt({
