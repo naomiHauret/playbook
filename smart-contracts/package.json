@@ -6,15 +6,9 @@
   "scripts": {
     "node": "npx hardhat node",
     "compile": "npx hardhat compile",
-    "test": "npx hardhat test",
-    "deployAll:localhost": "npx hardhat run scripts/deployAll.ts --network localhost",
-    "deployAll:galadriel": "npx hardhat run scripts/deployAll.ts --network galadriel",
-    "deployQuickstart": "npx hardhat run scripts/deployQuickstart.ts --network galadriel",
-    "deployTest:localhost": "npx hardhat run scripts/deployTest.ts --network localhost",
-    "deployTest:galadriel": "npx hardhat run scripts/deployTest.ts --network galadriel",
-    "callQuickstart": "npx hardhat run scripts/callQuickstart.ts --network galadriel",
+    "playground:deploy": "bun run playground/narrator/features/deploy.ts",
+    "playground:startGame": "bun run playground/narrator/features/start-game.ts",
     "generateStandardJson": "npx hardhat solidity-json",
-    "debug": "npx hardhat test scripts/debugContract.ts",
     "format": "prettier --write \"**/*.{ts,md,json,js}\" \"contracts/**/*.sol\""
   },
   "devDependencies": {
@@ -44,6 +38,7 @@
     "solidity-coverage": "^0.8.1",
     "ts-node": "^10.9.2",
     "typechain": "^8.3.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "viem": "^2.21.2"
   }
 }

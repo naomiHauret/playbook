@@ -2,25 +2,15 @@
 
 Smart contracts for Playbook.
 
-## Contracts workflow
+Allows the player to interact with a narrator. That narrator is a LLM with generates text based on :
 
-### 1. Initialization phase
+- a system prompt, which provides context and guidelines for the text generation (storyline, player casting)
+- a "event" prompt (when an event card is played)
+- a "event updated" prompt (when the user plays cards for this turn)
 
-- The player selects which storyline they would like to play
-- The player selects an NFT (character) from any supported blockchain
-- If the NFT does not have a token-bound account, create one
-- The game save file NFT is created, and the session data is stored within the NFT’s token-bound account
+A `PlaybookNarrator` contract is deployed to [Galadriel](https://docs.galadriel.com) for each game session of the player.
 
-### 2. Gameplay phase
-
-- The player draws cards from their deck and plays them during the game.
-- The card usage and game progress are tracked within the game save NFT.
-- Cards used are moved to a discard pile, with some gameplay mechanics allowing retrieval from the discard pile.
-
-### 3. End of game phase
-
-- Once the game session is complete, the save file data is updated, and the game save file NFT can be finalized or burned.
-- The player's deck may be updated with new cards as rewards for completing the storyline.
+The LLM uses [GPT-4-turbo](https://platform.openai.com/docs/models/gpt-4-turbo-and-gpt-4) model.
 
 ---
 

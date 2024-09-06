@@ -5,18 +5,18 @@ pragma solidity ^0.8.9;
 // import "hardhat/console.sol";
 import './interfaces/IOracle.sol';
 
-// @title GroqChatGpt
-// @notice This contract interacts with teeML Oracle to handle chat interactions using the Groq model.
-contract GroqChatGpt {
-    struct ChatRun {
+// @title PlaybookNarrator
+// @notice This contract interacts with teeML oracle to handle narrative and dialog text generation using the OpenAI model.
+contract PlaybookNarrator {
+    struct GameSession {
         address owner;
         IOracle.Message[] messages;
         uint messagesCount;
     }
 
-    // @notice Mapping from chat ID to ChatRun
-    mapping(uint => ChatRun) public chatRuns;
-    uint private chatRunsCount;
+    // @notice Mapping from session ID to GameSession
+    mapping(uint => GameSession) public gameSessions;
+    uint private gameSessionsCount;
 
     // @notice Event emitted when a new chat is created
     event ChatCreated(address indexed owner, uint indexed chatId);
@@ -27,33 +27,40 @@ contract GroqChatGpt {
     // @notice Address of the oracle contract
     address public oracleAddress;
 
+    // @notice system prompt
+    string public prompt;
+
     // @notice Event emitted when the oracle address is updated
     event OracleAddressUpdated(address indexed newOracleAddress);
 
-    // @notice Configuration for the Groq request
-    IOracle.GroqRequest private config;
+    // @notice Configuration for the OpenAI request
+    IOracle.OpenAiRequest private config;
 
     // @param initialOracleAddress Initial address of the oracle contract
-    constructor(address initialOracleAddress) {
+    constructor(address initialOracleAddress, string memory systemPrompt) {
         owner = msg.sender;
         oracleAddress = initialOracleAddress;
-        chatRunsCount = 0;
+        gameSessionsCount = 0;
+        prompt = systemPrompt;
 
-        config = IOracle.GroqRequest({
-            model: 'llama-3.1-8b-instant',
-            frequencyPenalty: 21, // > 20 for null
-            logitBias: '', // empty str for null
-            maxTokens: 1000, // 0 for null
-            presencePenalty: 21, // > 20 for null
-            responseFormat: '{"type":"text"}',
+        config = IOracle.OpenAiRequest({
+            model: 'gpt-4-turbo', // `gpt-4-turbo` is optimized for speed and cost-effectiveness
+            frequencyPenalty: 1, // discourage repetition
+            logitBias: '', // this could be player specific so that the model would avoid specific words (trigger warnings) ;
+            maxTokens: 1000, // maximum number of tokens (words, punctuation, etc.) in the model's output ; 1000 should be fine as we expect single response
+            presencePenalty: 1, // diversify the narrative
+            responseFormat: '{"type":"text"}', // plain text ; if every characters had a wallet that would be added in a XMTP group, we'd use JSON
             seed: 0, // null
             stop: '', // null
             temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
             topP: 101, // Percentage 0-100, > 100 means null
+            tools: '',
+            toolChoice: '', // "none" or "auto"
             user: '' // null
         });
     }
 
+    // @notice Ensures the caller is the contract owner
     modifier onlyOwner() {
         require(msg.sender == owner, 'Caller is not owner');
         _;
@@ -76,39 +83,44 @@ contract GroqChatGpt {
     // @param message The initial message to start the chat with
     // @return The ID of the newly created chat
     function startChat(string memory message) public returns (uint) {
-        ChatRun storage run = chatRuns[chatRunsCount];
-
+        GameSession storage run = gameSessions[gameSessionsCount];
         run.owner = msg.sender;
+        IOracle.Message memory systemMessage = createTextMessage(
+            'system',
+            prompt
+        );
+        run.messages.push(systemMessage);
         IOracle.Message memory newMessage = createTextMessage('user', message);
         run.messages.push(newMessage);
-        run.messagesCount = 1;
+        run.messagesCount = 2;
 
-        uint currentId = chatRunsCount;
-        chatRunsCount = chatRunsCount + 1;
+        uint currentId = gameSessionsCount;
+        gameSessionsCount = gameSessionsCount + 1;
 
-        IOracle(oracleAddress).createGroqLlmCall(currentId, config);
+        IOracle(oracleAddress).createOpenAiLlmCall(currentId, config);
         emit ChatCreated(msg.sender, currentId);
 
         return currentId;
     }
 
-    // @notice Handles the response from the oracle for a Groq LLM call
+    // @notice Handles the response from the oracle for an OpenAI LLM call
     // @param runId The ID of the chat run
     // @param response The response from the oracle
     // @param errorMessage Any error message
     // @dev Called by teeML oracle
-    function onOracleGroqLlmResponse(
+    function onOracleOpenAiLlmResponse(
         uint runId,
-        IOracle.GroqResponse memory response,
+        IOracle.OpenAiResponse memory response,
         string memory errorMessage
     ) public onlyOracle {
-        ChatRun storage run = chatRuns[runId];
+        GameSession storage run = gameSessions[runId];
         require(
             keccak256(
                 abi.encodePacked(run.messages[run.messagesCount - 1].role)
             ) == keccak256(abi.encodePacked('user')),
             'No message to respond to'
         );
+
         if (!compareStrings(errorMessage, '')) {
             IOracle.Message memory newMessage = createTextMessage(
                 'assistant',
@@ -117,12 +129,46 @@ contract GroqChatGpt {
             run.messages.push(newMessage);
             run.messagesCount++;
         } else {
+            if (compareStrings(response.content, '')) {
+                IOracle(oracleAddress).createFunctionCall(
+                    runId,
+                    response.functionName,
+                    response.functionArguments
+                );
+            } else {
+                IOracle.Message memory newMessage = createTextMessage(
+                    'assistant',
+                    response.content
+                );
+                run.messages.push(newMessage);
+                run.messagesCount++;
+            }
+        }
+    }
+
+    // @notice Handles the response from the oracle for a function call
+    // @param runId The ID of the chat run
+    // @param response The response from the oracle
+    // @param errorMessage Any error message
+    // @dev Called by teeML oracle
+    function onOracleFunctionResponse(
+        uint runId,
+        string memory response,
+        string memory errorMessage
+    ) public onlyOracle {
+        GameSession storage run = gameSessions[runId];
+        require(
+            compareStrings(run.messages[run.messagesCount - 1].role, 'user'),
+            'No function to respond to'
+        );
+        if (compareStrings(errorMessage, '')) {
             IOracle.Message memory newMessage = createTextMessage(
-                'assistant',
-                response.content
+                'user',
+                response
             );
             run.messages.push(newMessage);
             run.messagesCount++;
+            IOracle(oracleAddress).createOpenAiLlmCall(runId, config);
         }
     }
 
@@ -130,7 +176,7 @@ contract GroqChatGpt {
     // @param message The new message to add
     // @param runId The ID of the chat run
     function addMessage(string memory message, uint runId) public {
-        ChatRun storage run = chatRuns[runId];
+        GameSession storage run = gameSessions[runId];
         require(
             keccak256(
                 abi.encodePacked(run.messages[run.messagesCount - 1].role)
@@ -143,7 +189,7 @@ contract GroqChatGpt {
         run.messages.push(newMessage);
         run.messagesCount++;
 
-        IOracle(oracleAddress).createGroqLlmCall(runId, config);
+        IOracle(oracleAddress).createOpenAiLlmCall(runId, config);
     }
 
     // @notice Retrieves the message history of a chat run
@@ -153,7 +199,7 @@ contract GroqChatGpt {
     function getMessageHistory(
         uint chatId
     ) public view returns (IOracle.Message[] memory) {
-        return chatRuns[chatId].messages;
+        return gameSessions[chatId].messages;
     }
 
     // @notice Creates a text message with the given role and content
