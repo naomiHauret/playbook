@@ -88,6 +88,12 @@ interface StorylineCharacter {
   decks: StorylineCharacterDecks
 }
 
+export type CastedCharacterEventActivities = Array<{
+  id: string
+  deck: 'action' | 'social'
+  succeeded: boolean
+}>
+
 /**
  * Playable storyline (without narrative elements)
  */
@@ -133,10 +139,34 @@ export interface GameSession {
   galadriel_contract_address: string
   characters: Record<string, CastedCharacter> // StorylineCharacter id => CastedCharacter
   events_discard_pile: Array<string>
+  events_deck: Array<string>
   current_event: {
     id: string
     current_influence_score: number
     current_turn: number
+    turns: Record<
+      number,
+      Record<
+        string,
+        {
+          before_play: {
+            performed: boolean
+            action: 'discard' | 'draw' | null
+          }
+          discard: {
+            cards: Array<{ id: string; deck: 'action' | 'social' }>
+          }
+          draw: {
+            cards: Array<{ id: string; deck: 'action' | 'social' }>
+          }
+          play: {
+            id: string
+            deck: 'action' | 'social'
+            succeeded: boolean
+          }
+        }
+      >
+    >
     play_order: Array<string>
   }
 }
@@ -187,7 +217,10 @@ export interface StorylineCharacterWithNarrative extends StorylineCharacter {
   description: string
 }
 
-export interface StorylineWithNarrative extends Storyline {
+export interface StorylineWithNarrative {
   title: string
   description: string
+  characters: Record<string, StorylineCharacterWithNarrative>
+  initial_situations_pile: Record<string, StorylineCardEventWithNarrative>
+  events_deck: Record<string, StorylineCardEventWithNarrative>
 }

@@ -41,10 +41,12 @@ const bootstrapGame: STF<PlaybookState, BootstrapNewGameInput> = {
       finished_at: 0,
       galadriel_contract_address: '',
       events_discard_pile: [],
+      events_deck: Object.keys(state.storylines[inputs.storylineId].events_deck),
       characters: {},
       current_event: {
         id: '',
         current_influence_score: 0,
+        turns: {},
         current_turn: 0,
         play_order: [],
       },
@@ -182,8 +184,75 @@ const configureGameInfra: STF<PlaybookState, ConfigureInfraInput> = {
   },
 }
 
+type DrawEventInput = {
+  storylineId: string
+  gameId: string
+  timestamp: number
+}
+
+/**
+ * Draw event card
+ */
+const drawEvent: STF<PlaybookState, DrawEventInput> = {
+  handler: ({ state, inputs, msgSender, block, emit }) => {
+    const { gameId, storylineId, timestamp } = inputs
+    const storyline = state.storylines[storylineId]
+    const session = state.players[msgSender].games[inputs.storylineId].sessions[gameId]
+    let card
+    switch (session.status) {
+      case 'ready':
+        // Draw from the initial event deck
+        state.players[msgSender].games[inputs.storylineId].sessions[gameId].status = 'ongoing'
+        let initialDeck = arrayShuffle(Object.keys(storyline.initial_situations_pile))
+        // Get card index
+        card = initialDeck.splice(0, 1)[0]
+        break
+
+      case 'ongoing':
+        let eventsDeck = arrayShuffle(session.events_deck)
+        // Get card index
+        card = eventsDeck.splice(0, 1)[0]
+        // Remove card from player's events deck
+        state.players[msgSender].games[inputs.storylineId].sessions[gameId].events_deck = eventsDeck
+        // Add to player's events discard pile
+        state.players[msgSender].games[inputs.storylineId].sessions[gameId].events_discard_pile = [
+          ...state.players[msgSender].games[inputs.storylineId].sessions[gameId]
+            .events_discard_pile,
+          card,
+        ]
+        // Update current event
+        state.players[msgSender].games[inputs.storylineId].sessions[gameId].current_event = {
+          current_turn: 0,
+          current_influence_score: 0,
+          id: card,
+          turns: {},
+          play_order: arrayShuffle(Object.keys(storyline.characters)),
+        }
+        break
+
+      default:
+        break
+    }
+
+    state.players[msgSender].games[inputs.storylineId].sessions[gameId].current_event
+    emit({
+      name: 'CardEventDrawn',
+      value: {
+        storylineId,
+        gameId,
+        card,
+        player: msgSender,
+        timestamp,
+      },
+    })
+
+    return state
+  },
+}
+
 export const transitions: Transitions<PlaybookState> = {
   bootstrapGame,
   castCharacter,
   configureGameInfra,
+  drawEvent,
 }

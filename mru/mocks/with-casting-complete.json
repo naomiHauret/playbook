@@ -1934,6 +1934,7 @@
                 "finished_at": 0,
                 "galadriel_contract_address": "" ,
                 "events_discard_pile": [], 
+                "events_deck": ["S001", "S002", "S003", "S004", "S005", "S006", "S007", "S008", "S009", "S010", "S011", "S012", "S013", "S014", "S015", "S016", "S017", "S018", "S019", "S020", "S021", "S022", "S023", "S024", "S025", "S026", "S027", "S028", "S029", "S030"],
                 "characters": {
                     "the-forest-queen": {
                         "nftContractAddress": "0xb0278207e6c82b0b1c11bafcf3bbeaef5d871fa8",
@@ -2026,6 +2027,7 @@
                   "id": "",
                   "current_influence_score": 0,
                   "current_turn": 0,
+                  "turns": {},
                   "play_order": []
                 }
               }

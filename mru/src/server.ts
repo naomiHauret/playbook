@@ -7,16 +7,22 @@ import {
   MruActions,
 } from './stackr'
 import { ActionConfirmationStatus } from '@stackr/sdk'
+import { fetchStoryline } from './helpers/fetch-storyline'
 
 export enum SERVER_ROUTES_GROUPS_PREFIX {
   mru = '/mru',
+  api = '/api',
 }
 
+export enum ROUTES_API {
+  playerSession = '/players/:player/games/:storylineId/sessions/:gameId',
+}
 export enum ROUTES_MRU {
   info = '/info',
   bootstrapGame = '/bootstrap',
   cast = '/cast',
   configureInfra = '/configure-infra',
+  drawEvent = '/draw-event',
 }
 
 /**
@@ -25,6 +31,40 @@ export enum ROUTES_MRU {
 export async function main() {
   const mru = await initializeMicroRollup()
 
+  /**
+   * API routes
+   */
+  const apiRoutes = new Elysia({ prefix: SERVER_ROUTES_GROUPS_PREFIX.api })
+    /**
+     * Return game session for a given player and storyline
+     */
+    .get(
+      ROUTES_API.playerSession,
+
+      async ({ params: { player, storylineId, gameId } }) => {
+        const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+        if (!machine) {
+          throw new Error('Machine not found')
+        }
+        const { state } = machine
+        const storyline = await fetchStoryline({
+          storylineId,
+          state,
+        })
+        return {
+          storyline,
+          session: state.players[player].games[storylineId].sessions[gameId],
+        }
+      },
+      {
+        params: t.Object({
+          player: t.String(),
+          storylineId: t.String(),
+          gameId: t.String(),
+        }),
+        type: 'json',
+      },
+    )
   /**
    * MRU routes
    */
@@ -232,8 +272,71 @@ export async function main() {
         }),
       },
     )
+    /**
+     * Request to draw an event card
+     */
+    .post(
+      ROUTES_MRU.drawEvent,
+      async ({ body }) => {
+        try {
+          const inputs = {
+            storylineId: body.storylineId,
+            gameId: body.gameId,
+            timestamp: +body.timestamp,
+          }
+
+          const drawEvent = schemas.drawEvent.actionFrom({
+            inputs,
+            signature: body.signature,
+            msgSender: body.player,
+          })
+
+          const ack = await mru.submitAction(MruActions.drawEvent, drawEvent)
+
+          // leverage the ack to wait for C1 and access logs & error from STF execution
+          const { logs, errors } = await ack.waitFor(ActionConfirmationStatus.C1)
+
+          const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+          if (!machine) {
+            throw new Error('Machine not found')
+          }
+          const { state } = machine
+          const narration = await fetchStoryline({
+            storylineId: body.storylineId,
+            state,
+          })
+          const session = state.players[body.player].games[body.storylineId].sessions[body.gameId]
+          const cardId = session.current_event.id
+          const card =
+            session.events_discard_pile.length <= 1
+              ? narration.initial_situations_pile[cardId]
+              : narration.events_deck[cardId]
+
+          return {
+            card,
+            session: {
+              current_event: session.current_event,
+            },
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      },
+      {
+        type: 'json',
+        body: t.Object({
+          player: t.String(),
+          storylineId: t.String(),
+          gameId: t.String(),
+          aiContractAddress: t.String(),
+          signature: t.String(),
+          timestamp: t.Number(),
+        }),
+      },
+    )
   new Elysia()
     .use(mruRoutes)
+    .use(apiRoutes)
     .get('/', () => 'Hello Elysia')
     .listen(3000)
 }

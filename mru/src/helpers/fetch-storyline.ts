@@ -1,15 +1,15 @@
-import type { AppState, Storyline } from '../stackr'
+import type { AppState, StorylineWithNarrative } from '../stackr'
 
 export async function fetchStoryline(params: {
   storylineId: string
   state: AppState
-}): Promise<Storyline> {
+}): Promise<StorylineWithNarrative> {
   const { state, storylineId } = params
   const file = Bun.file(`storylines/${storylineId}.json`)
   const exists = await file.exists()
 
-  if (!state.storylines.includes(storylineId) || !exists) {
-    const storyline: Storyline = await file.json()
+  if (Object.keys(state.storylines).includes(storylineId) && exists) {
+    const storyline: StorylineWithNarrative = await file.json()
     return storyline
   }
 
