@@ -1,0 +1,90 @@
+---
+import Default from '~/layouts/Default.astro'
+import { getEntry } from 'astro:content'
+import { getFrameMetadata } from '@coinbase/onchainkit/frame'
+import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xmtp'
+import { getFrameState } from '~/utils/frame-state'
+import { xmtpClient, type StorylineWithNarrative } from '~/services'
+
+const { slug, sessionId } = Astro.params
+const entry = await getEntry('storylines', slug!!)
+
+if (!entry?.data) Astro.redirect('/not-found')
+
+const storyline: StorylineWithNarrative = entry?.data!!
+
+// Metadata when pasting url for this page
+let frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'Draw event card',
+      action: 'tx',
+      target: `${Astro.url.origin}/frames/sign-draw-event`,
+    },
+  ],
+  state: {
+    storylineId: slug,
+    gameId: sessionId,
+    timestamp: Date.now(),
+  },
+  image: `${Astro.url.href}index.og`,
+  isOpenFrame: true,
+  accepts: { xmtp: 'vNext' },
+})
+
+// Metadata after signing transaction
+if (Astro.request.method === 'POST') {
+  const body = await Astro.request.json()
+  if (isXmtpFrameRequest(body)) {
+    const { isValid, message } = await getXmtpFrameMessage(body)
+    const txId = message?.transactionId
+    const player = message?.verifiedWalletAddress
+    const { storylineId, gameId, timestamp } = getFrameState(message?.state!!)
+    if (isValid && player && txId && gameId && storylineId && timestamp) {
+      const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/draw-event`, {
+        method: 'POST',
+        body: JSON.stringify({
+          storylineId,
+          gameId,
+          timestamp,
+          signature: txId,
+          player,
+        }),
+      })
+      const { card } = await raw.json()
+      const conversation = await xmtpClient.conversations.newConversation(player)
+      conversation.send(`*you draw "${card.title}"*\n...\n`)
+
+      frameMetadata = getFrameMetadata({
+        image: `${Astro.url.href}/card.og?title=${card.title}`,
+        isOpenFrame: true,
+        accepts: { xmtp: 'vNext' },
+      })
+    }
+  }
+}
+---
+
+<Default title="Play with your NFTs @ Playbook" frameMetadata={frameMetadata}>
+  <main class="max-w-2xl text-center mx-auto pt-20">
+    <section class="px-4">
+      <h1 class="text-neutral-12 font-serif text-4xl">It's time to wake your NFTs</h1>
+      <p class="text-xl leading-relaxed text-neutral-10 pt-6 pb-8">
+        Try <span class="text-accent-11">Playbook</span>, a text-based RPG where your NFTs become
+        the stars of unique adventures.
+      </p>
+    </section>
+    <section class="leading-relaxed">
+      <h1 class="pb-4 text-accent-12 font-serif text-5xl font-bold">{storyline.title}</h1>
+      <p class="text-accent-11 italic text-2xl">{storyline.description}</p>
+    </section>
+    <section class="pt-8 px-4">
+      <div class="font-serif text-neutral-10 text-lg">
+        <p class="text-neutral-11 italic pb-2">Your adventure is ready.</p>Send this page to <button
+          class="font-sans font-normal text-sm bg-accent-3 px-[0.5em] py-[0.25em] rounded-lg text-accent-11"
+          >tryplaybook.converse.xyz</button
+        > on your Converse Messenger or Coinbase Wallet app to play this storyline.
+      </div>
+    </section>
+  </main>
+</Default>

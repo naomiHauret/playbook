@@ -10,7 +10,11 @@ export const POST: APIRoute = async ({ params, request, url }) => {
   const { player, storylineId, gameId } = body
   const conversation = await xmtpClient.conversations.newConversation(player!!)
 
-  const receipt = await deployNarratorContract()
+  const receipt = await deployNarratorContract({
+    player,
+    storylineId,
+    gameId,
+  })
   if (receipt.contractAddress) {
     await conversation.send(
       `Your narrator is ready! Link it to your game to complete your setup.\n\n${url.origin}/storylines/${storylineId}/narrator/${gameId}?status=deployed&contract=${receipt.contractAddress}`,

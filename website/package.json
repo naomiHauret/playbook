@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write \"**/*.{ts,tsx,md,mdx,css,astro,html}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx,css,astro,json,html}\""
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.0",

@@ -21,7 +21,6 @@ import { ALIGNMENTS_DESCRIPTIONS, ALIGNMNENTS, PERSONALITY_TYPES } from '~/utils
 
 const { slug, role } = Astro.params
 const entry = await getEntry('storylines', slug!!)
-
 if (!entry?.data || !entry?.data?.characters?.[role!!]) return Astro.redirect('/not-found')
 const storyline: Storyline = entry?.data!!
 const character = storyline.characters[role!!]
@@ -123,7 +122,7 @@ if (Astro.request.method === 'GET' && wallet) {
         conversation.send(`Let's cast the next character.\n\n\n${characterText}\n\n`)
       } else {
         conversation.send(
-          `Your casting is complete ! Now, let's create the narrator. After this you'll be all set up to start playing !\n\n${Astro.url.origin}/narrator?storylineId=${storylineId}&gameId=${gameId}`,
+          `Your casting is complete ! Now, let's create the narrator. After this you'll be all set up to start playing !\n\n${Astro.url.origin}/storylines/${slug}/narrator/${gameId}`,
         )
       }
 

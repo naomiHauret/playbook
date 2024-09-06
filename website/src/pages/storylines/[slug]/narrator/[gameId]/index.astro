@@ -83,7 +83,10 @@ if (Astro.request.method === 'POST') {
         }),
       })
       const { status } = await raw.json()
-      if (status === 'deployed') conversation.send('Your adventure begins...')
+      if (status === 'ready')
+        conversation.send(
+          'Your adventure is about to begin.\nDraw your first event card to start the story and let the narrator unroll the story.',
+        )
       frameMetadata = getFrameMetadata({
         image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/ready.og`,
         isOpenFrame: true,
