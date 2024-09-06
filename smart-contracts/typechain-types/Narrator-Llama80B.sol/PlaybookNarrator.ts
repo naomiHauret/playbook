@@ -96,7 +96,7 @@ export interface PlaybookNarratorInterface extends Interface {
       | 'startGame',
   ): FunctionFragment
 
-  getEvent(nameOrSignatureOrTopic: 'ChatCreated' | 'OracleAddressUpdated'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'GameSessionStarted' | 'OracleAddressUpdated'): EventFragment
 
   encodeFunctionData(functionFragment: 'addMessage', values: [string, BigNumberish]): string
   encodeFunctionData(functionFragment: 'gameSessions', values: [BigNumberish]): string
@@ -125,7 +125,7 @@ export interface PlaybookNarratorInterface extends Interface {
   decodeFunctionResult(functionFragment: 'startGame', data: BytesLike): Result
 }
 
-export namespace ChatCreatedEvent {
+export namespace GameSessionStartedEvent {
   export type InputTuple = [owner: AddressLike, chatId: BigNumberish]
   export type OutputTuple = [owner: string, chatId: bigint]
   export interface OutputObject {
@@ -200,7 +200,7 @@ export interface PlaybookNarrator extends BaseContract {
   >
 
   getMessageHistory: TypedContractMethod<
-    [chatId: BigNumberish],
+    [sessionId: BigNumberish],
     [IOracle.MessageStructOutput[]],
     'view'
   >
@@ -239,7 +239,7 @@ export interface PlaybookNarrator extends BaseContract {
   >
   getFunction(
     nameOrSignature: 'getMessageHistory',
-  ): TypedContractMethod<[chatId: BigNumberish], [IOracle.MessageStructOutput[]], 'view'>
+  ): TypedContractMethod<[sessionId: BigNumberish], [IOracle.MessageStructOutput[]], 'view'>
   getFunction(
     nameOrSignature: 'onOracleFunctionResponse',
   ): TypedContractMethod<
@@ -264,11 +264,11 @@ export interface PlaybookNarrator extends BaseContract {
   ): TypedContractMethod<[message: string], [bigint], 'nonpayable'>
 
   getEvent(
-    key: 'ChatCreated',
+    key: 'GameSessionStarted',
   ): TypedContractEvent<
-    ChatCreatedEvent.InputTuple,
-    ChatCreatedEvent.OutputTuple,
-    ChatCreatedEvent.OutputObject
+    GameSessionStartedEvent.InputTuple,
+    GameSessionStartedEvent.OutputTuple,
+    GameSessionStartedEvent.OutputObject
   >
   getEvent(
     key: 'OracleAddressUpdated',
@@ -279,15 +279,15 @@ export interface PlaybookNarrator extends BaseContract {
   >
 
   filters: {
-    'ChatCreated(address,uint256)': TypedContractEvent<
-      ChatCreatedEvent.InputTuple,
-      ChatCreatedEvent.OutputTuple,
-      ChatCreatedEvent.OutputObject
+    'GameSessionStarted(address,uint256)': TypedContractEvent<
+      GameSessionStartedEvent.InputTuple,
+      GameSessionStartedEvent.OutputTuple,
+      GameSessionStartedEvent.OutputObject
     >
-    ChatCreated: TypedContractEvent<
-      ChatCreatedEvent.InputTuple,
-      ChatCreatedEvent.OutputTuple,
-      ChatCreatedEvent.OutputObject
+    GameSessionStarted: TypedContractEvent<
+      GameSessionStartedEvent.InputTuple,
+      GameSessionStartedEvent.OutputTuple,
+      GameSessionStartedEvent.OutputObject
     >
 
     'OracleAddressUpdated(address)': TypedContractEvent<

@@ -31,7 +31,7 @@ contract PlaybookNarrator {
     event OracleAddressUpdated(address indexed newOracleAddress);
 
     // @notice Configuration for the Anthropic request
-    IOracle.LlmRequest private config;
+    IOracle.GroqRequest private config;
 
     // @param initialOracleAddress Initial address of the oracle contract
     constructor(address initialOracleAddress, string memory systemPrompt) {
@@ -40,19 +40,17 @@ contract PlaybookNarrator {
         gameSessionsCount = 0;
         prompt = systemPrompt;
 
-        config = IOracle.LlmRequest({
-            model: 'claude-3-5-sonnet-20240620',
+        config = IOracle.GroqRequest({
+            model: 'llama-3.1-8b-instant',
             frequencyPenalty: 21, // > 20 for null
             logitBias: '', // empty str for null
-            maxTokens: 1000, // 0 for null
+            maxTokens: 800, // 0 for null
             presencePenalty: 21, // > 20 for null
             responseFormat: '{"type":"text"}',
             seed: 0, // null
             stop: '', // null
             temperature: 10, // Example temperature (scaled up, 10 means 1.0), > 20 means null
             topP: 101, // Percentage 0-100, > 100 means null
-            tools: '',
-            toolChoice: 'auto', // "none" or "auto"
             user: '' // null
         });
     }
@@ -94,7 +92,7 @@ contract PlaybookNarrator {
         uint currentId = gameSessionsCount;
         gameSessionsCount = gameSessionsCount + 1;
 
-        IOracle(oracleAddress).createLlmCall(currentId, config);
+        IOracle(oracleAddress).createGroqLlmCall(currentId, config);
         emit GameSessionStarted(msg.sender, currentId);
 
         return currentId;
@@ -170,7 +168,7 @@ contract PlaybookNarrator {
             );
             session.messages.push(newMessage);
             session.messagesCount++;
-            IOracle(oracleAddress).createLlmCall(sessionId, config);
+            IOracle(oracleAddress).createGroqLlmCall(sessionId, config);
         }
     }
 
@@ -196,7 +194,7 @@ contract PlaybookNarrator {
         session.messages.push(newMessage);
         session.messagesCount++;
 
-        IOracle(oracleAddress).createLlmCall(sessionId, config);
+        IOracle(oracleAddress).createGroqLlmCall(sessionId, config);
     }
 
     // @notice Retrieves the message history of a game session

@@ -60,7 +60,7 @@ export function createSystemPrompt(args: {
 
   6. **Tone and Style**:
       - Use a tone and style that matches the nature and gravity of the storyline.
-  
+      
   ### Current Storyline and Character Information:
   - **Storyline Description**: ${args.storyline.description}
   - **Characters**:
@@ -87,20 +87,19 @@ export function createEventPrompt(args: {
   }
 }) {
   return `**Event Context:**
-- **Event**: "${args.storyEvent.title}" - "${args.storyEvent.description}"
+- **Event**: "${args.storyEvent.description}"
 - **Event Sequence**: ${args.storyEvent.sequence}
 
 ** Objective:**
-- Describe the current event in detail, including the situation that the characters face and the challenges or opportunities present. Keep it under 250 words.
+- Describe the current situation that the characters face and the challenges or opportunities present.
 - If appropriate, generate dialogue between the characters involved, reflecting their personalities and reactions to the new event. Not all characters have to speak.
 - Use the character names in all direct dialogue and reference the characters' archetypes where necessary for context.
-- Reflect the event status in the narrative:
+- Reflect the event status in the narrative, without directly referencing this status :
   - **Ongoing**: The characters must continue to take actions to resolve the situation. Highlight the sense of urgency or efforts required.
   - **Resolved**: The event has been completed successfully, even if some actions failed. Describe how the characters managed to achieve their objectives despite difficulties.
   - **Failed**: The event has not been completed successfully. Describe the consequences of failure and any setbacks experienced by the characters.
 
-Based on this event context, generate the narrative and dialogues that will immerse the player in the unfolding story and prepare them for the upcoming choices.
-`
+Based on this event context, generate the narrative and dialogues that will immerse the player in the unfolding story.`
 }
 
 export function createUpdateEventPrompt(args: {

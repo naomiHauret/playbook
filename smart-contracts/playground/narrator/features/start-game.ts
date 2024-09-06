@@ -1,4 +1,4 @@
-import { abi } from '../../../artifacts/contracts/Narrator-Opus.sol/PlaybookNarrator.json'
+import { abi } from '../../../artifacts/contracts/Narrator.sol/PlaybookNarrator.json'
 import { getContract } from 'viem'
 import * as enchantedForestStoryline from '../the-enchanted-forest.json'
 import { deployerAccount, deployerWalletClient, Message, publicClient } from '../helpers'
@@ -38,7 +38,7 @@ async function startGame(narratorContractAddress: `0x${string}`) {
     if (newMessages) {
       for (const message of newMessages) {
         allMessages.push(message)
-        console.log(`> ${message.content}`)
+        console.log(`> ${new Date()}\n ${message.content}\n`)
         if (allMessages.at(-1)?.role === 'assistant') {
           response = allMessages.at(-1)?.content
         }

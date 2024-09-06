@@ -12,6 +12,8 @@ A `PlaybookNarrator` contract is deployed to [Galadriel](https://docs.galadriel.
 
 The LLM uses [GPT-4-turbo](https://platform.openai.com/docs/models/gpt-4-turbo-and-gpt-4) model.
 
+> Other versions of the Narrator contract using different LLM were created, but none seemed to function.
+
 ---
 
 > Bootstrapped by Galadriel quickstart instructions (`git clone https://github.com/galadriel-ai/contracts`)

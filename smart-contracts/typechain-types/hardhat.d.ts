@@ -33,6 +33,10 @@ declare module 'hardhat/types/runtime' {
       name: 'PlaybookNarrator',
       signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.PlaybookNarrator__factory>
+    getContractFactory(
+      name: 'PlaybookNarrator',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
+    ): Promise<Contracts.PlaybookNarrator__factory>
 
     getContractAt(
       name: 'IChatGpt',
@@ -59,6 +63,11 @@ declare module 'hardhat/types/runtime' {
       address: string | ethers.Addressable,
       signer?: ethers.Signer,
     ): Promise<Contracts.PlaybookNarrator>
+    getContractAt(
+      name: 'PlaybookNarrator',
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer,
+    ): Promise<Contracts.PlaybookNarrator>
 
     deployContract(
       name: 'IChatGpt',
@@ -68,6 +77,10 @@ declare module 'hardhat/types/runtime' {
       name: 'IOracle',
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IOracle>
+    deployContract(
+      name: 'PlaybookNarrator',
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.PlaybookNarrator>
     deployContract(
       name: 'PlaybookNarrator',
       signerOrOptions?: ethers.Signer | DeployContractOptions,
@@ -91,6 +104,11 @@ declare module 'hardhat/types/runtime' {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.IOracle>
+    deployContract(
+      name: 'PlaybookNarrator',
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
+    ): Promise<Contracts.PlaybookNarrator>
     deployContract(
       name: 'PlaybookNarrator',
       args: any[],

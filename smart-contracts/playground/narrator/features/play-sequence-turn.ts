@@ -1,8 +1,8 @@
-import { abi } from '../../../artifacts/contracts/Narrator-Opus.sol/PlaybookNarrator.json'
+import { abi } from '../../../artifacts/contracts/Narrator.sol/PlaybookNarrator.json'
 import { getContract } from 'viem'
 import * as enchantedForestStoryline from '../the-enchanted-forest.json'
 import * as mruState from '../with-dumb-narrator.json'
-import { deployerWalletClient, Message, publicClient } from '../helpers'
+import { deployerAccount, deployerWalletClient, Message, publicClient } from '../helpers'
 import { getNewMessages } from './get-messages'
 import { createUpdateEventPrompt } from '../prompts'
 
@@ -59,6 +59,17 @@ async function playSequenceTurn(narratorContractAddress: `0x${string}`, chatId: 
     }),
   })
 
+  const updateInitialSituation = await publicClient.simulateContract({
+    account: deployerAccount,
+    address: contract.address,
+    abi: contract.abi,
+    functionName: 'addMessage',
+    args: [promptPlayTurn, chatId],
+  })
+  const updateInitialSituationTx = await deployerWalletClient.writeContract(
+    updateInitialSituation.request,
+  )
+
   const allMessages: Array<Message> = []
   let response
   while (!response) {
@@ -66,6 +77,7 @@ async function playSequenceTurn(narratorContractAddress: `0x${string}`, chatId: 
     if (newMessages) {
       for (const message of newMessages) {
         allMessages.push(message)
+        console.log(`> ${new Date()}\n ${message.content}\n`)
         if (allMessages.at(-1)?.role === 'assistant') {
           response = allMessages.at(-1)?.content
         }

@@ -2110,7 +2110,7 @@
               "current_event": {
                 "id": "",
                 "current_influence_score": 0,
-                "current_turn": 0,
+                "turns": {},
                 "play_order": []
               }
             }

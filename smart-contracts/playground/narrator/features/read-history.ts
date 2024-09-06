@@ -1,5 +1,5 @@
 import { deployerWalletClient, Message, publicClient } from '../helpers'
-import { abi } from '../../../artifacts/contracts/Narrator-Opus.sol/PlaybookNarrator.json'
+import { abi } from '../../../artifacts/contracts/Narrator.sol/PlaybookNarrator.json'
 import { getContract } from 'viem'
 
 async function readHistory(narratorContractAddress: `0x${string}`, chatId: string | bigint) {
@@ -17,6 +17,7 @@ async function readHistory(narratorContractAddress: `0x${string}`, chatId: strin
   })) as Array<Message>
 
   messages.map((message) => {
+    console.log(message.role)
     console.log(message.content[0].value)
     console.log('\n\n')
   })
