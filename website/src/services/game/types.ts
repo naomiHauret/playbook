@@ -82,6 +82,7 @@ export enum CharacterRole {
  */
 interface StorylineCharacter {
   initial_role: CharacterRole
+  involved: Array<string>
   decks: StorylineCharacterDecks
 }
 
@@ -136,6 +137,7 @@ export interface GameSession {
     current_influence_score: number
     current_turn: number
     play_order: Array<string>
+    involved: Array<string>
   }
 }
 

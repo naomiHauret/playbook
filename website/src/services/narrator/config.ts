@@ -40,3 +40,11 @@ export const deployerAccount = privateKeyToAccount(import.meta.env.PRIVATE_KEY_N
 
 // Galadriel oracle
 export const ORACLE_ADDRESS = import.meta.env.NARRATOR_ORACLE_CONTRACT_ADDRESS
+
+export interface Message {
+  role: 'assistant' | 'system' | 'user'
+  content: Array<{
+    contentType: 'text'
+    value: string
+  }>
+}

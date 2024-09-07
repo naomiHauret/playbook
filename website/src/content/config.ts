@@ -40,6 +40,7 @@ const _storylineCharacterSchema = z.object({
   name: z.string(),
   initial_role: z.enum(['protagonist', 'antagonist', 'support']),
   description: z.string(),
+  involved: z.array(z.string()),
   decks: z.object({
     action: _characterDeckSchema,
     social: _characterDeckSchema,

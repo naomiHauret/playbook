@@ -30,5 +30,6 @@ export async function deployNarratorContract(args: {
   })
 
   const receipt = await publicClient.waitForTransactionReceipt({ hash })
+  console.log('narrator deployed - ', receipt.contractAddress)
   return receipt
 }

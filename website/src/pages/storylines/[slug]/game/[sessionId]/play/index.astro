@@ -4,7 +4,8 @@ import { getEntry } from 'astro:content'
 import { getFrameMetadata } from '@coinbase/onchainkit/frame'
 import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xmtp'
 import { getFrameState } from '~/utils/frame-state'
-import { xmtpClient, type StorylineWithNarrative } from '~/services'
+import { type StorylineWithNarrative } from '~/services/game'
+import { startGame } from '~/services/narrator'
 
 const { slug, sessionId } = Astro.params
 const entry = await getEntry('storylines', slug!!)
@@ -27,7 +28,7 @@ let frameMetadata = getFrameMetadata({
     gameId: sessionId,
     timestamp: Date.now(),
   },
-  image: `${Astro.url.href}index.og`,
+  image: `${Astro.url.href}/draw.og`,
   isOpenFrame: true,
   accepts: { xmtp: 'vNext' },
 })
@@ -41,31 +42,40 @@ if (Astro.request.method === 'POST') {
     const player = message?.verifiedWalletAddress
     const { storylineId, gameId, timestamp } = getFrameState(message?.state!!)
     if (isValid && player && txId && gameId && storylineId && timestamp) {
-      const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/draw-event`, {
+      // Draw event card
+      const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/events/draw`, {
         method: 'POST',
         body: JSON.stringify({
           storylineId,
           gameId,
-          timestamp,
+          timestamp: +timestamp,
           signature: txId,
           player,
         }),
       })
-      const { card } = await raw.json()
-      const conversation = await xmtpClient.conversations.newConversation(player)
-      conversation.send(`*you draw "${card.title}"*\n...\n`)
+      const { event, narrator } = await raw.json()
 
-      frameMetadata = getFrameMetadata({
-        image: `${Astro.url.href}/card.og?title=${card.title}`,
-        isOpenFrame: true,
-        accepts: { xmtp: 'vNext' },
-      })
+      // Send card to narrator to generate text
+      if (narrator && event?.title && event?.description && event?.sequence)
+        startGame({
+          contractAddress: narrator,
+          narratedEvent: event,
+          gameId,
+          storylineId,
+          player,
+        })
     }
+
+    frameMetadata = getFrameMetadata({
+      image: `${Astro.url.href}/card.og`,
+      isOpenFrame: true,
+      accepts: { xmtp: 'vNext' },
+    })
   }
 }
 ---
 
-<Default title="Play with your NFTs @ Playbook" frameMetadata={frameMetadata}>
+<Default title="Draw your event card @ Playbook" frameMetadata={frameMetadata}>
   <main class="max-w-2xl text-center mx-auto pt-20">
     <section class="px-4">
       <h1 class="text-neutral-12 font-serif text-4xl">It's time to wake your NFTs</h1>

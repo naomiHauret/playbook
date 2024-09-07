@@ -1,7 +1,7 @@
 import { html } from 'satori-html'
 import satori from 'satori'
 import sharp from 'sharp'
-import { getFonts } from '../../utils'
+import { getFonts } from '~/utils/fonts'
 
 const generateOgImage = async (): Promise<Buffer> => {
   const markup = html(`
@@ -9,7 +9,7 @@ const generateOgImage = async (): Promise<Buffer> => {
     style="height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #FDFDFD; font-size: 32px;"
   >
 
-      <div style="font-size:90px; text-align: center; font-family:'Tinos';">Your next great adventure awaits.</span>
+      <span style="font-size:90px; font-family:'Tinos';">Ready !</span>
 
   </div>`)
 
@@ -31,7 +31,7 @@ const generateOgImage = async (): Promise<Buffer> => {
 
 export async function GET() {
   const response = await generateOgImage()
-  return new Response('response', {
+  return new Response(response, {
     status: 200,
     headers: {
       'Content-Type': 'image/png',

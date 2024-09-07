@@ -33,8 +33,8 @@ export const POST: APIRoute = async ({ params, request }) => {
           method: 'eth_signTypedData_v4',
           params: {
             domain: signatureInfo.domain,
-            types: signatureInfo.schemas.bootstrapGame.types,
-            primaryType: signatureInfo.schemas.bootstrapGame.primaryType,
+            types: signatureInfo.schemas.drawEvent.types,
+            primaryType: signatureInfo.schemas.drawEvent.primaryType,
             message: inputs,
           },
         }),

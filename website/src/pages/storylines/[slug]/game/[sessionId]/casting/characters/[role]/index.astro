@@ -7,7 +7,7 @@ import { getFrameState } from '~/utils/frame-state'
 import { getAllNftsByAddress, type OpenseaNfts } from '~/services/opensea/getAllNftsByAddress'
 import { type Storyline } from 'src/content/config'
 import { xmtpClient } from '~/services/xmtp/client'
-import { ALIGNMENTS_DESCRIPTIONS, ALIGNMNENTS, PERSONALITY_TYPES } from '~/utils/characters'
+import { ALIGNMNENTS, PERSONALITY_TYPES } from '~/utils/characters'
 
 /**
  * Casting an NFT as a character
@@ -19,26 +19,26 @@ import { ALIGNMENTS_DESCRIPTIONS, ALIGNMNENTS, PERSONALITY_TYPES } from '~/utils
  * 5. Player signs the message in to wallet to confirm their custom casting choice (NFT, personality, alignment)
  */
 
-const { slug, role } = Astro.params
+const { slug, sessionId, role } = Astro.params
 const entry = await getEntry('storylines', slug!!)
 if (!entry?.data || !entry?.data?.characters?.[role!!]) return Astro.redirect('/not-found')
 const storyline: Storyline = entry?.data!!
 const character = storyline.characters[role!!]
-const game = Astro.url.searchParams.get('gameId')
 const wallet = Astro.url.searchParams.get('wallet')
 
 // Default metadata
 let frameMetadata = getFrameMetadata({
   buttons: [
     {
+      //
       label: 'Open NFTs & get code',
       action: 'post_redirect',
-      postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+      postUrl: `${Astro.url.href}`,
     },
     {
       label: 'Continue with this NFT',
       action: 'post',
-      postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
+      postUrl: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/casting/characters/${role}`,
     },
   ],
   input: {
@@ -48,13 +48,12 @@ let frameMetadata = getFrameMetadata({
     currentStep: 1,
     storylineId: slug,
     characterId: role,
-    gameId: game,
+    gameId: sessionId,
     timestamp: Date.now(),
   },
-  image: `${Astro.url.href}/index.og`,
+  image: `${Astro.url.href}/character.og?archetype=${encodeURI(character.name)}&step=pick`,
   isOpenFrame: true,
   accepts: { xmtp: 'vNext' },
-  postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
 })
 let player: string | undefined
 let nfts: Record<string, OpenseaNfts[]> = {}
@@ -118,23 +117,23 @@ if (Astro.request.method === 'GET' && wallet) {
           default:
             break
         }
-        let characterText = `# ${characterToCast.name} #\n\n"${characterToCast.description}"\n\nIn this storyline, this character is ${roleDescriptor}\n\n\nWhich of your NFT do you want to cast as "${characterToCast.name}" ?\n\n${Astro.url.href}/casting/characters/${idNextCharacterToCast}?gameId=${gameId}`
+        let characterText = `# ${characterToCast.name} #\n\n"${characterToCast.description}"\n\nIn this storyline, this character is ${roleDescriptor}\n\n\nWhich of your NFT do you want to cast as "${characterToCast.name}" ?\n\n${Astro.url.origin}/storylines/${slug}/game/${gameId}/casting/characters/${idNextCharacterToCast}`
         conversation.send(`Let's cast the next character.\n\n\n${characterText}\n\n`)
       } else {
         conversation.send(
-          `Your casting is complete ! Now, let's create the narrator. After this you'll be all set up to start playing !\n\n${Astro.url.origin}/storylines/${slug}/narrator/${gameId}`,
+          `Your casting is complete ! Now, let's create the narrator. After this you'll be all set up to start playing !\n\n${Astro.url.origin}/storylines/${slug}/game/${gameId}/narrator`,
         )
       }
 
       // add option to change this cast
       frameMetadata = getFrameMetadata({
-        image: `${Astro.url.href}casted.og`,
+        image: `${Astro.url.href}/casted.og`,
         isOpenFrame: true,
         accepts: { xmtp: 'vNext' },
       })
     } else {
       if (!inputText || inputText.trim() === '')
-        return Astro.redirect(`${Astro.url.href}&wallet=${player}`, 302)
+        return Astro.redirect(`${Astro.url.href}?wallet=${player}`, 302)
 
       switch (currentStep) {
         case 1:
@@ -155,17 +154,17 @@ if (Astro.request.method === 'GET' && wallet) {
               storylineId: slug,
               characterId: role,
               pickedNft: submittedNftCode,
-              gameId: game,
+              gameId: sessionId,
               timestamp: +timestamp,
               currentStep: 2,
             },
-            image: `${Astro.url.href}/index.og`,
+            image: `${Astro.url.href}/character.og?archetype=${encodeURI(character.name)}&nft=${encodeURI(JSON.stringify(submittedNftCode))}&step=personality`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
             postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
           })
           conversation.send(
-            `Here are the different personality codes:\n\n${PERSONALITY_TYPES.map((personality, index) => `${index}: ${personality}\n`).join('')}\n\nType the personality code you want to use for this character in the frame input. For instance, input 3 for ${PERSONALITY_TYPES[3]}.`,
+            `Type the personality code you want to use for this character in the frame input. For instance, input 3 for ${PERSONALITY_TYPES[3]}.\nhint: use /personality to get the list of codes.`,
           )
 
           break
@@ -187,17 +186,17 @@ if (Astro.request.method === 'GET' && wallet) {
               characterId: role,
               personality: PERSONALITY_TYPES[+inputText],
               pickedNft,
-              gameId: game,
+              gameId: sessionId,
               timestamp: +timestamp,
               currentStep: 3,
             },
-            image: `${Astro.url.href}/index.og`,
+            image: `${Astro.url.href}/character.og?archetype=${encodeURI(character.name)}&nft=${encodeURI(JSON.stringify(pickedNft))}&personality=${PERSONALITY_TYPES[+inputText]}&step=alignment`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
             postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
           })
           conversation.send(
-            `Here are the different alignment codes:\n\n${ALIGNMNENTS.map((_alignement, index) => `${index}: ${_alignement} ;\n ${ALIGNMENTS_DESCRIPTIONS[_alignement]}\n\n`).join('')}\n\nType the alignment code you want to use for this character in the frame input. For instance, input 3 for ${ALIGNMNENTS[3]}.`,
+            `Type the alignment code you want to use for this character in the frame input. For instance, input 3 for ${ALIGNMNENTS[3]}.\nhint: use /alignment to get the list of codes.`,
           )
           break
         // Alignment
@@ -205,7 +204,7 @@ if (Astro.request.method === 'GET' && wallet) {
           frameMetadata = getFrameMetadata({
             buttons: [
               {
-                label: 'Cast this nft',
+                label: 'Cast my choice',
                 action: 'tx',
                 target: `${Astro.url.origin}/frames/sign-cast-character`,
               },
@@ -216,11 +215,11 @@ if (Astro.request.method === 'GET' && wallet) {
               personality,
               alignment: ALIGNMNENTS[+inputText],
               pickedNft,
-              gameId: game,
+              gameId: sessionId,
               timestamp: +timestamp,
               currentStep: 4,
             },
-            image: `${Astro.url.href}/index.og`,
+            image: `${Astro.url.href}/character.og?archetype=${encodeURI(character.name)}&nft=${encodeURI(JSON.stringify(pickedNft))}&personality=${personality}&alignment=${ALIGNMNENTS[+inputText]}&step=cast`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
             postUrl: `${Astro.url.pathname}/storylines/${slug}/casting/characters/${role}`,
@@ -233,7 +232,7 @@ if (Astro.request.method === 'GET' && wallet) {
 }
 ---
 
-<Default title="Play with your NFTs @ Playbook" frameMetadata={frameMetadata}>
+<Default title={`Cast your NFT @ Playbook`} frameMetadata={frameMetadata}>
   <div class="max-w-2xl text-center mx-auto pt-20">
     <section class="px-4">
       <h1 class="text-neutral-12 font-serif text-4xl">Cast your NFT for this character</h1>

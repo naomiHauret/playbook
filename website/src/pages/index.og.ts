@@ -6,10 +6,13 @@ import { getFonts } from '../utils'
 const generateOgImage = async (): Promise<Buffer> => {
   const markup = html(`
   <div
-    style="height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #FDFDFD; font-size: 32px;"
+    style="height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #FDFDFD;"
   >
 
-      <span style="font-size:90px; font-family:'Tinos';">This is a placeholder.</span>
+      <div style="font-size:90px; text-align:center; font-family:'Tinos';">Time to wake your NFTs.</div>
+      <div style="margin-top: 24px; font-size:36px; text-align:center; font-family:'Inter';">
+        Try Playbook, a text-based RPG where your NFTs become the stars of unique adventures.
+      </div>
 
   </div>`)
 

@@ -17,8 +17,9 @@ export const POST: APIRoute = async ({ params, request, url }) => {
   })
   if (receipt.contractAddress) {
     await conversation.send(
-      `Your narrator is ready! Link it to your game to complete your setup.\n\n${url.origin}/storylines/${storylineId}/narrator/${gameId}?status=deployed&contract=${receipt.contractAddress}`,
+      `Your narrator is ready! Link it to your game to complete your setup.\n\n${url.origin}/storylines/${storylineId}/game/${gameId}/narrator?status=deployed&contract=${receipt.contractAddress}`,
     )
+
     return new Response(JSON.stringify(receipt), {
       status: 200,
       headers: {

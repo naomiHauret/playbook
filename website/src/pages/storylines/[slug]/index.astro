@@ -8,7 +8,6 @@ import { getFrameState } from '~/utils/frame-state'
 
 const { slug } = Astro.params
 const entry = await getEntry('storylines', slug!!)
-
 if (!entry?.data) Astro.redirect('/not-found')
 
 const storyline = entry?.data!!
@@ -20,14 +19,13 @@ let frameMetadata = getFrameMetadata({
       label: 'Pick this storyline',
       action: 'tx',
       target: `${Astro.url.origin}/frames/sign-bootstrap`,
-      postUrl: Astro.url.href,
     },
   ],
   state: {
     storylineId: slug,
     timestamp: Date.now(),
   },
-  image: `${Astro.url.href}index.og`,
+  image: `${Astro.url.href}/discover.og?title=${encodeURI(entry?.data?.title!!)}`,
   isOpenFrame: true,
   accepts: { xmtp: 'vNext' },
 })
@@ -55,8 +53,8 @@ if (Astro.request.method === 'POST') {
       // Send confirmation message to player, along with casting frames (1 character = 1 frame)
       const conversation = await xmtpClient.conversations.newConversation(player)
       const cast = Object.keys(storyline.characters)
-      const charactedToCastId = cast[0]
-      const characterToCast = storyline.characters[charactedToCastId]
+      const characterToCastId = cast[0]
+      const characterToCast = storyline.characters[characterToCastId]
       let roleDescriptor = 'a protagonist (you control the actions of this character).'
       switch (characterToCast.initial_role) {
         case 'antagonist':
@@ -68,7 +66,7 @@ if (Astro.request.method === 'POST') {
         default:
           break
       }
-      let characterText = `# ${characterToCast.name} #\n\n"${characterToCast.description}"\n\nIn this storyline, this character is ${roleDescriptor}\n\n\nWhich of your NFT do you want to cast as "${characterToCast.name}" ?\n\n${Astro.url.href}/casting/characters/${charactedToCastId}?gameId=${gameId}`
+      let characterText = `# ${characterToCast.name} #\n\n"${characterToCast.description}"\n\nIn this storyline, this character is ${roleDescriptor}\n\n\nWhich of your NFT do you want to cast as "${characterToCast.name}" ?\n\n${Astro.url.origin}/storylines/${slug}/game/${gameId}/casting/characters/${characterToCastId}`
       // Send casting frame for the 1st character
       conversation.send(
         `Your save file is ready. Now, let's start the casting.\n\n\n\n${characterText}`,

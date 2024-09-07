@@ -1,13 +1,12 @@
 ---
 import { getXmtpFrameMessage, isXmtpFrameRequest } from '@coinbase/onchainkit/xmtp'
-import Default from '../../../../../layouts/Default.astro'
+import Default from '~/layouts/Default.astro'
 import { getFrameMetadata } from '@coinbase/onchainkit/frame'
 import { getFrameState } from '~/utils/frame-state'
 import { xmtpClient } from '~/services/xmtp'
 
-const { slug, gameId } = Astro.params
+const { slug, sessionId } = Astro.params
 const contract = Astro.url.searchParams.get('contract')
-const status = Astro.url.searchParams.get('status')
 
 let player
 
@@ -27,14 +26,14 @@ if (contract === null) {
       {
         label: 'Create my narrator',
         action: 'post',
-        target: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}?status=triggered`,
+        target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator?status=triggered`,
       },
     ],
     state: {
       storylineId: slug,
-      gameId: gameId,
+      gameId: sessionId,
     },
-    image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/idle.og`,
+    image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/idle.og`,
     isOpenFrame: true,
     accepts: { xmtp: 'vNext' },
   })
@@ -49,11 +48,11 @@ if (contract === null) {
     ],
     state: {
       storylineId: slug,
-      gameId: gameId,
+      gameId: sessionId,
       contract,
       timestamp: Date.now(),
     },
-    image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/link.og`,
+    image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/link.og`,
     isOpenFrame: true,
     accepts: { xmtp: 'vNext' },
   })
@@ -85,10 +84,10 @@ if (Astro.request.method === 'POST') {
       const { status } = await raw.json()
       if (status === 'ready')
         conversation.send(
-          'Your adventure is about to begin.\nDraw your first event card to start the story and let the narrator unroll the story.',
+          `Your adventure is about to begin.\nDraw your first event card to start the story and let the narrator wait for narrator to unroll your story.\n\n${Astro.url.origin}/storylines/${slug}/game/${gameId}/play`,
         )
       frameMetadata = getFrameMetadata({
-        image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/ready.og`,
+        image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/ready.og`,
         isOpenFrame: true,
         accepts: { xmtp: 'vNext' },
       })
@@ -108,7 +107,7 @@ if (Astro.request.method === 'POST') {
         buttons: [
           {
             action: 'link',
-            target: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}?status=deploying`,
+            target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator?status=deploying`,
             label: 'Open creation status page',
           },
         ],
@@ -116,7 +115,7 @@ if (Astro.request.method === 'POST') {
           storylineId: slug,
           gameId: gameId,
         },
-        image: `${Astro.url.origin}/storylines/${slug}/narrator/${gameId}/deploying.og`,
+        image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/deploying.og`,
         isOpenFrame: true,
         accepts: { xmtp: 'vNext' },
       })
@@ -126,7 +125,7 @@ if (Astro.request.method === 'POST') {
 ---
 
 <Default
-  title="Try Playbook - inline RPG with your NFTs as characters"
+  title="Your game, your narrator - inline RPG with your NFTs as characters"
   frameMetadata={frameMetadata}
 >
   <main class="max-w-2xl text-center mx-auto pt-20">

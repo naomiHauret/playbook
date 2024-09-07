@@ -6,7 +6,6 @@ import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xm
 import { xmtpClient } from '../../services'
 
 const storylines = await getCollection('storylines')
-
 let frameMetadata = getFrameMetadata({
   buttons: [
     {
@@ -28,11 +27,6 @@ if (Astro.request.method === 'POST') {
     if (isValid && player) {
       // Send all available storylines as frames to the player in their inbox
       const conversation = await xmtpClient.conversations.newConversation(player)
-      conversation.send(
-        storylines.length > 1
-          ? `There are currently ${storylines.length} storylines you can play :`
-          : `There is currently ${storylines.length} storyline you can play :`,
-      )
       const storylinesFrames = storylines.map(
         async (entry: { data: { [x: string]: any }; id: string | number }) => {
           const storyline = entry.data
@@ -42,7 +36,13 @@ if (Astro.request.method === 'POST') {
         },
       )
 
-      Promise.allSettled(storylinesFrames)
+      await conversation.send(
+        storylines.length > 1
+          ? `There are currently ${storylines.length} storylines you can play :`
+          : `There is currently ${storylines.length} storyline you can play :`,
+      )
+
+      await Promise.allSettled(storylinesFrames)
     }
   }
 }
