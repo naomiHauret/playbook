@@ -1,6 +1,10 @@
 # @playbook/chatbot
 
-Main interface for Playbook end-users.
+Main game interface for Playbook end-users.
+
+## Commands
+
+This chatbot is designed to handle **text messages only**. It works along frames to provide an inline gaming experience as much as possible.
 
 ---
 
