@@ -54,7 +54,6 @@ if (Astro.request.method === 'POST') {
         }),
       })
       const { event, narrator } = await raw.json()
-
       // Send card to narrator to generate text
       if (narrator && event?.title && event?.description && event?.sequence)
         startGame({

@@ -67,6 +67,7 @@ export async function startGame(args: {
   })
   await deployerWalletClient.writeContract(initialize.request)
   const chatId = initialize.result
+  // Get back narrated version from the LLM and send it to the player
   await sendNewNarratedMessages({
     contract,
     player: args.player,

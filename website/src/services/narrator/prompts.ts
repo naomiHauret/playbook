@@ -13,7 +13,6 @@ export function createSystemPrompt(args: {
   storyline: StorylineWithNarrative
   playerSession: GameSession
 }) {
-  console.log('args.playerSession.characters[character]', args.playerSession.characters)
   return `You are an advanced LLM narrator for a text-based RPG game. Your role is to generate immersive dialogues between characters and rich narrative text based on the storyline and custom characters provided to you. You must adhere to the following rules and guidelines:
   
   1. **Context Awareness**:

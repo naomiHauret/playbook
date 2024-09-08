@@ -6,7 +6,7 @@ import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xm
 import { getFrameState } from '~/utils/frame-state'
 import { type StorylineWithNarrative, getPlayerSession } from '~/services/game'
 import { xmtpClient } from '~/services/xmtp'
-import { ConsentListEntry } from '@xmtp/xmtp-js'
+import { requestTurnNarration } from '~/services/narrator/request-narration'
 
 const { slug, sessionId } = Astro.params
 const entry = await getEntry('storylines', slug!!)
@@ -29,7 +29,7 @@ let frameMetadata = getFrameMetadata({
     gameId: sessionId,
     timestamp: Date.now(),
   },
-  image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('Game phase')}`,
+  image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('* A new sequence start *')}`,
   isOpenFrame: true,
   accepts: { xmtp: 'vNext' },
 })
@@ -51,8 +51,6 @@ if (Astro.request.method === 'POST') {
     })
     const playOrder = playerSession.session.current_event.play_order
     if (txId) {
-      console.log('==============')
-      console.log(storylineId, castedCharacterId, actionType, cardId, gameId, timestamp)
       const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/play`, {
         method: 'POST',
         body: JSON.stringify({
@@ -68,13 +66,36 @@ if (Astro.request.method === 'POST') {
           castedCharacterId,
         }),
       })
-      const stuff = await raw.json()
-      console.log('stuff', stuff)
+      const updated = await raw.json()
+      const characterAction = updated.game.turns[`${playerSession.session.current_event.current_turn}`][castedCharacterId]
+      const played = characterAction.play
+      frameMetadata = getFrameMetadata({
+                buttons: [
+                  {
+                    label: updated.game.current_turn !== playerSession.session.current_event.current_turn ?  'Next turn' : 'Continue turn',
+                    action: 'post',
+                    target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn?phase=planning`,
+                  },
+                ],
+                state: {
+                  storylineId: slug,
+                  castedCharacterId: updated.game.play_order[0],
+                  gameId: sessionId,
+                  timestamp: Date.now(),
+                  player,
+                  planningAction: null,
+                  deckType: 'none',
+                  actionType: "planning",
+                  cardId:  'none',
+                },
+                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`Next`)}`,
+                isOpenFrame: true,
+                accepts: { xmtp: 'vNext' },
+      })
     } else {
       if (playerSession.session.status === 'ongoing') {
         if (playOrder.length > 0) {
           const characterPlaying = playOrder[0]
-          console.log('phase', phase)
 
           if (phase === null || phase === 'planning') {
             if (planningAction === null) {
@@ -102,7 +123,7 @@ if (Astro.request.method === 'POST') {
                   gameId: sessionId,
                   timestamp: Date.now(),
                 },
-                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${storyline.characters[characterPlaying]?.name} planning phase -`)}`,
+                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- What will ${playerSession.session.characters[characterPlaying]?.nftName} do ? -`)}`,
                 isOpenFrame: true,
                 accepts: { xmtp: 'vNext' },
               })
@@ -132,7 +153,7 @@ if (Astro.request.method === 'POST') {
                   actionType: 'planning',
                   timestamp: Date.now(),
                 },
-                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${storyline.characters[characterPlaying]?.name} planning phase -`)}`,
+                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- What will ${playerSession.session.characters[characterPlaying]?.nftName} do ? -`)}`,
                 isOpenFrame: true,
                 accepts: { xmtp: 'vNext' },
               })
@@ -168,24 +189,47 @@ if (Astro.request.method === 'POST') {
                 gameId: sessionId,
                 timestamp: Date.now(),
               },
-              image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${storyline.characters[characterPlaying]?.name} is about to move... -`)}`,
+              image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${playerSession.session.characters[characterPlaying]?.nftName} is about to move... -`)}`,
               isOpenFrame: true,
               accepts: { xmtp: 'vNext' },
             })
           }
         } else {
+          const storyEvent = playerSession.session.events_discard_pile.length > 1
+        ? storyline.events_deck[playerSession.session.current_event.id]
+        : storyline.initial_situations_pile[playerSession.session.current_event.id]
+          
+        const eventCharactersActions = Object.keys(playerSession.session.characters).filter(char => storyline.characters[char].involved.includes(playerSession.session.current_event.id)).map(char => {
+          const storylineCharacter = storyline.characters[char]
+          const sessionCharacter = playerSession.session.characters[char]
+          const turnDetails = playerSession.session.current_event.turns[`${playerSession.session.current_event.current_turn}`][char].play
+          return {
+            name: sessionCharacter.nftName,
+            role: sessionCharacter.role,
+            archetype: storylineCharacter.name,
+            action: {
+                title: storylineCharacter.decks[turnDetails?.deck][turnDetails?.id].title,
+                description: storylineCharacter.decks[turnDetails?.deck][turnDetails?.id].description,
+                successful: turnDetails?.succeeded
+            }
+          }
+        })
+        requestTurnNarration({
+            status: "ongoing",
+            event: storyEvent,
+            narratorContractAddress: playerSession.session.galadriel_contract_address,
+            nextAction: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play`,
+            player: player!!,
+            characters:  eventCharactersActions
+          })
           frameMetadata = getFrameMetadata({
             state: {
               storylineId: slug,
               gameId: sessionId,
               timestamp: Date.now(),
             },
-            buttons: [
-              {
-                label: 'Reveal the story',
-              },
-            ],
-            image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('The narrator watches as the action unfolds...')}`,
+
+            image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('The narrator seems inspired...')}`,
             isOpenFrame: true,
             accepts: { xmtp: 'vNext' },
           })

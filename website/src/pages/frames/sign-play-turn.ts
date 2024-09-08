@@ -14,7 +14,6 @@ export const POST: APIRoute = async ({ params, url, request }) => {
   const body = await request.json()
   if (isXmtpFrameRequest(body)) {
     const { isValid, message } = await getXmtpFrameMessage(body)
-    console.log('yeah')
     if (isValid && message?.verifiedWalletAddress) {
       const player = message?.verifiedWalletAddress
       const signatureInfo = await getMRUSignatureInfo()
