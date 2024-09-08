@@ -39,10 +39,11 @@ run(async (context: HandlerContext) => {
   } = context
 
   if (typeId !== 'text') {
+    /*
     await context.intent(
       `> This input is not supported.\nType "/help" to get all the available commands.`,
     )
-
+*/
     return
   } else if (text.startsWith('/')) {
     await context.intent(text)

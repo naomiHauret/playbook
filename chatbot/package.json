@@ -9,7 +9,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\""
   },
   "dependencies": {
-    "@xmtp/message-kit": "latest"
+    "@xmtp/message-kit": "0.0.10"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.8",
