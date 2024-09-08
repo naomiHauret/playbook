@@ -1,0 +1,232 @@
+---
+import Default from '~/layouts/Default.astro'
+import { getEntry } from 'astro:content'
+import { getFrameMetadata } from '@coinbase/onchainkit/frame'
+import { isXmtpFrameRequest, getXmtpFrameMessage } from '@coinbase/onchainkit/xmtp'
+import { getFrameState } from '~/utils/frame-state'
+import { type StorylineWithNarrative, getPlayerSession } from '~/services/game'
+import { xmtpClient } from '~/services/xmtp'
+import { ConsentListEntry } from '@xmtp/xmtp-js'
+
+const { slug, sessionId } = Astro.params
+const entry = await getEntry('storylines', slug!!)
+if (!entry?.data) Astro.redirect('/not-found')
+const storyline: StorylineWithNarrative = entry?.data!!
+const phase = Astro.url.searchParams.get('phase')
+const deckType = Astro.url.searchParams.get('deckType')
+const planningAction = Astro.url.searchParams.get('planningAction')
+
+let frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'Next',
+      action: 'post',
+      target: Astro.url.href,
+    },
+  ],
+  state: {
+    storylineId: slug,
+    gameId: sessionId,
+    timestamp: Date.now(),
+  },
+  image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('Game phase')}`,
+  isOpenFrame: true,
+  accepts: { xmtp: 'vNext' },
+})
+
+if (Astro.request.method === 'POST') {
+  const body = await Astro.request.json()
+  if (isXmtpFrameRequest(body)) {
+    const { isValid, message } = await getXmtpFrameMessage(body)
+    const txId = message?.transactionId
+    const player = message?.verifiedWalletAddress
+    const conversation = await xmtpClient.conversations.newConversation(player)
+
+    const { storylineId, castedCharacterId, actionType, cardId, gameId, timestamp, ...frameState } =
+      getFrameState(message?.state!!)
+    const playerSession = await getPlayerSession({
+      storylineId,
+      gameId,
+      player,
+    })
+    const playOrder = playerSession.session.current_event.play_order
+    if (txId) {
+      console.log('==============')
+      console.log(storylineId, castedCharacterId, actionType, cardId, gameId, timestamp)
+      const raw = await fetch(`${import.meta.env.MRU_ENDPOINT}/mru/play`, {
+        method: 'POST',
+        body: JSON.stringify({
+          gameId,
+          storylineId,
+          timestamp: +timestamp,
+          signature: txId,
+          player,
+          planningAction: frameState.planningAction,
+          deckType: frameState.deckType ?? 'none',
+          actionType,
+          cardId: actionType === 'playing' ? message?.inputText : cardId ? cardId : 'none',
+          castedCharacterId,
+        }),
+      })
+      const stuff = await raw.json()
+      console.log('stuff', stuff)
+    } else {
+      if (playerSession.session.status === 'ongoing') {
+        if (playOrder.length > 0) {
+          const characterPlaying = playOrder[0]
+          console.log('phase', phase)
+
+          if (phase === null || phase === 'planning') {
+            if (planningAction === null) {
+              frameMetadata = getFrameMetadata({
+                buttons: [
+                  {
+                    label: 'Play card',
+                    action: 'post',
+                    target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn?phase=playing`,
+                  },
+                  {
+                    label: 'Draw card',
+                    action: 'post',
+                    target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn?phase=planning&planningAction=draw`,
+                  },
+                  {
+                    label: 'Discard card',
+                    action: 'post',
+                    target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn?phase=planning&planningAction=discard`,
+                  },
+                ],
+                state: {
+                  storylineId: slug,
+                  castedCharacterId: characterPlaying,
+                  gameId: sessionId,
+                  timestamp: Date.now(),
+                },
+                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${storyline.characters[characterPlaying]?.name} planning phase -`)}`,
+                isOpenFrame: true,
+                accepts: { xmtp: 'vNext' },
+              })
+            } else {
+              frameMetadata = getFrameMetadata({
+                buttons: [
+                  {
+                    label: 'Action deck',
+                    action: 'tx',
+                    target: `${Astro.url.origin}/frames/sign-play-turn?actionType=planning&planningAction=${planningAction}&deckType=action`,
+
+                    // target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn?phase=playing`,
+                  },
+                  {
+                    label: 'Social deck',
+                    action: 'post',
+                    target: `${Astro.url.origin}/frames/sign-play-turn?actionType=planning&planningAction=${planningAction}&deckType=action`,
+                    // target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn?phase=planning&planningAction=draw`,
+                  },
+                ],
+                state: {
+                  storylineId: slug,
+                  castedCharacterId: characterPlaying,
+                  deckType,
+                  planningAction: planningAction ?? 'none',
+                  gameId: sessionId,
+                  actionType: 'planning',
+                  timestamp: Date.now(),
+                },
+                image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${storyline.characters[characterPlaying]?.name} planning phase -`)}`,
+                isOpenFrame: true,
+                accepts: { xmtp: 'vNext' },
+              })
+            }
+          } else {
+            let handList = []
+            const storylineCharacterDeck = storyline.characters[characterPlaying].decks
+
+            playerSession.session.characters[characterPlaying].hand.map((card, index) => {
+              const cardTitle = storylineCharacterDeck.action?.[card]?.title
+                ? storylineCharacterDeck.action?.[card]?.title
+                : storylineCharacterDeck.social?.[card]?.title
+              handList.push(`${card} - ${cardTitle}`)
+            })
+            conversation.send(`${handList.join('\n')}`)
+            frameMetadata = getFrameMetadata({
+              buttons: [
+                {
+                  label: 'Play card',
+                  action: 'tx',
+                  target: `${Astro.url.origin}/frames/sign-play-turn?actionType=playing&deckType=none&planningAction=none`,
+                },
+              ],
+              input: {
+                text: 'Card id',
+              },
+              state: {
+                storylineId: slug,
+                actionType: 'playing',
+                deckType: 'none',
+                planningAction: 'none',
+                castedCharacterId: characterPlaying,
+                gameId: sessionId,
+                timestamp: Date.now(),
+              },
+              image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI(`- ${storyline.characters[characterPlaying]?.name} is about to move... -`)}`,
+              isOpenFrame: true,
+              accepts: { xmtp: 'vNext' },
+            })
+          }
+        } else {
+          frameMetadata = getFrameMetadata({
+            state: {
+              storylineId: slug,
+              gameId: sessionId,
+              timestamp: Date.now(),
+            },
+            buttons: [
+              {
+                label: 'Reveal the story',
+              },
+            ],
+            image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('The narrator watches as the action unfolds...')}`,
+            isOpenFrame: true,
+            accepts: { xmtp: 'vNext' },
+          })
+        }
+      } else {
+        frameMetadata = getFrameMetadata({
+          state: {
+            storylineId: slug,
+            gameId: sessionId,
+            timestamp: Date.now(),
+          },
+          image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn.og?text=${encodeURI('This session is finished.')}`,
+          isOpenFrame: true,
+          accepts: { xmtp: 'vNext' },
+        })
+      }
+    }
+  }
+}
+---
+
+<Default title="Time to play @ Playbook" frameMetadata={frameMetadata}>
+  <main class="max-w-2xl text-center mx-auto pt-20">
+    <section class="px-4">
+      <h1 class="text-neutral-12 font-serif text-4xl">It's time to wake your NFTs</h1>
+      <p class="text-xl leading-relaxed text-neutral-10 pt-6 pb-8">
+        Try <span class="text-accent-11">Playbook</span>, a text-based RPG where your NFTs become
+        the stars of unique adventures.
+      </p>
+    </section>
+    <section class="leading-relaxed">
+      <h1 class="pb-4 text-accent-12 font-serif text-5xl font-bold">{storyline.title}</h1>
+      <p class="text-accent-11 italic text-2xl">{storyline.description}</p>
+    </section>
+    <section class="pt-8 px-4">
+      <div class="font-serif text-neutral-10 text-lg">
+        <p class="text-neutral-11 italic pb-2">Your adventure is inline.</p>Send this page to <button
+          class="font-sans font-normal text-sm bg-accent-3 px-[0.5em] py-[0.25em] rounded-lg text-accent-11"
+          >tryplaybook.converse.xyz</button
+        > on your Converse Messenger or Coinbase Wallet app to play.
+      </div>
+    </section>
+  </main>
+</Default>

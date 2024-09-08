@@ -9,7 +9,6 @@ export const POST: APIRoute = async ({ params, request, url }) => {
   const body = await request.json()
   const { player, storylineId, gameId } = body
   const conversation = await xmtpClient.conversations.newConversation(player!!)
-
   const receipt = await deployNarratorContract({
     player,
     storylineId,

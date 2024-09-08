@@ -20,45 +20,45 @@ let player
 
 let frameMetadata
 
-if (contract === null) {
-  frameMetadata = getFrameMetadata({
-    buttons: [
-      {
-        label: 'Create my narrator',
-        action: 'post',
-        target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator?status=triggered`,
+if (Astro.request.method === 'GET') {
+  if (contract === null) {
+    frameMetadata = getFrameMetadata({
+      buttons: [
+        {
+          label: 'Create my narrator',
+          action: 'post',
+          target: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator?status=triggered`,
+        },
+      ],
+      state: {
+        storylineId: slug,
+        gameId: sessionId,
       },
-    ],
-    state: {
-      storylineId: slug,
-      gameId: sessionId,
-    },
-    image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/idle.og`,
-    isOpenFrame: true,
-    accepts: { xmtp: 'vNext' },
-  })
-} else {
-  frameMetadata = getFrameMetadata({
-    buttons: [
-      {
-        label: 'Link narrator',
-        action: 'tx',
-        target: `${Astro.url.origin}/frames/sign-deploy-infra`,
+      image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/idle.og`,
+      isOpenFrame: true,
+      accepts: { xmtp: 'vNext' },
+    })
+  } else {
+    frameMetadata = getFrameMetadata({
+      buttons: [
+        {
+          label: 'Link narrator',
+          action: 'tx',
+          target: `${Astro.url.origin}/frames/sign-deploy-infra`,
+        },
+      ],
+      state: {
+        storylineId: slug,
+        gameId: sessionId,
+        contract,
+        timestamp: Date.now(),
       },
-    ],
-    state: {
-      storylineId: slug,
-      gameId: sessionId,
-      contract,
-      timestamp: Date.now(),
-    },
-    image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/link.og`,
-    isOpenFrame: true,
-    accepts: { xmtp: 'vNext' },
-  })
-}
-
-if (Astro.request.method === 'POST') {
+      image: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/narrator/link.og`,
+      isOpenFrame: true,
+      accepts: { xmtp: 'vNext' },
+    })
+  }
+} else if (Astro.request.method === 'POST') {
   const body = await Astro.request.json()
   if (isXmtpFrameRequest(body)) {
     const { isValid, message } = await getXmtpFrameMessage(body)

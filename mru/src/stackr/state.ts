@@ -85,6 +85,7 @@ export enum CharacterRole {
  */
 interface StorylineCharacter {
   initial_role: CharacterRole
+  involved: Array<string>
   decks: StorylineCharacterDecks
 }
 
@@ -151,7 +152,7 @@ export interface GameSession {
         {
           before_play: {
             performed: boolean
-            action: 'discard' | 'draw' | null
+            action: 'discard' | 'draw' | 'none'
           }
           discard: {
             cards: Array<{ id: string; deck: 'action' | 'social' }>
@@ -163,10 +164,11 @@ export interface GameSession {
             id: string
             deck: 'action' | 'social'
             succeeded: boolean
-          }
+          } | null
         }
       >
     >
+    involved: Array<string>
     play_order: Array<string>
   }
 }

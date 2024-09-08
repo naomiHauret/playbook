@@ -1,9 +1,46 @@
 {
   "storylines": {
-    "the-enchanted-forest":{
+    "the-enchanted-forest": {
       "characters": {
         "the-forest-queen": {
           "initial_role": "protagonist",
+          "involved": [
+            "I001",
+            "I002",
+            "I003",
+            "I004",
+            "I005",
+            "S001",
+            "S002",
+            "S003",
+            "S004",
+            "S005",
+            "S006",
+            "S007",
+            "S008",
+            "S009",
+            "S010",
+            "S011",
+            "S012",
+            "S013",
+            "S014",
+            "S015",
+            "S016",
+            "S017",
+            "S018",
+            "S019",
+            "S020",
+            "S021",
+            "S022",
+            "S023",
+            "S024",
+            "S025",
+            "S026",
+            "S027",
+            "S028",
+            "S029",
+            "S030"
+          ],
           "decks": {
             "action": {
               "FQ_A001": {
@@ -214,6 +251,43 @@
         },
         "the-cursed-wanderer": {
           "initial_role": "protagonist",
+          "involved": [
+            "I001",
+            "I002",
+            "I003",
+            "I004",
+            "I005",
+            "S001",
+            "S002",
+            "S003",
+            "S004",
+            "S005",
+            "S006",
+            "S007",
+            "S008",
+            "S009",
+            "S010",
+            "S011",
+            "S012",
+            "S013",
+            "S014",
+            "S015",
+            "S016",
+            "S017",
+            "S018",
+            "S019",
+            "S020",
+            "S021",
+            "S022",
+            "S023",
+            "S024",
+            "S025",
+            "S026",
+            "S027",
+            "S028",
+            "S029",
+            "S030"
+          ],
           "decks": {
             "action": {
               "CW_A001": {
@@ -424,6 +498,43 @@
         },
         "the-sprite": {
           "initial_role": "protagonist",
+          "involved": [
+            "I001",
+            "I002",
+            "I003",
+            "I004",
+            "I005",
+            "S001",
+            "S002",
+            "S003",
+            "S004",
+            "S005",
+            "S006",
+            "S007",
+            "S008",
+            "S009",
+            "S010",
+            "S011",
+            "S012",
+            "S013",
+            "S014",
+            "S015",
+            "S016",
+            "S017",
+            "S018",
+            "S019",
+            "S020",
+            "S021",
+            "S022",
+            "S023",
+            "S024",
+            "S025",
+            "S026",
+            "S027",
+            "S028",
+            "S029",
+            "S030"
+          ],
           "decks": {
             "action": {
               "TS_A001": {
@@ -635,6 +746,7 @@
         },
         "the-dark-sorcerer": {
           "initial_role": "antagonist",
+          "involved": ["S020", "S029"],
           "decks": {
             "action": {
               "DS_A001": {
@@ -1802,121 +1914,121 @@
           }
         },
         "S027": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
               },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 25,
-                "turn_limit": 2
+              "discard": {
+                "value": 0,
+                "cond": null
               }
-            }
-          },
-          "S028": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
               },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 20,
-                "turn_limit": 2
+              "discard": {
+                "value": 1,
+                "cond": "failure"
               }
+            },
+            "resolution": {
+              "influence_threshold": 25,
+              "turn_limit": 2
             }
-          },
-          "S029": {
-            "sequence": "final",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
+          }
+        },
+        "S028": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 75,
-                "turn_limit": 10
+              "discard": {
+                "value": 0,
+                "cond": null
               }
-            }
-          },
-          "S030": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 3,
-                  "cond": "failure"
-                }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
               },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 2,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 35,
-                "turn_limit": 3
+              "discard": {
+                "value": 1,
+                "cond": "failure"
               }
+            },
+            "resolution": {
+              "influence_threshold": 20,
+              "turn_limit": 2
             }
-          }  
+          }
+        },
+        "S029": {
+          "sequence": "final",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 75,
+              "turn_limit": 10
+            }
+          }
+        },
+        "S030": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 3,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 35,
+              "turn_limit": 3
+            }
+          }
+        }
       }
     }
   },

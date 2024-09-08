@@ -5,6 +5,43 @@
     "the-forest-queen": {
       "name": "The Forest Queen",
       "initial_role": "protagonist",
+      "involved": [
+        "I001",
+        "I002",
+        "I003",
+        "I004",
+        "I005",
+        "S001",
+        "S002",
+        "S003",
+        "S004",
+        "S005",
+        "S006",
+        "S007",
+        "S008",
+        "S009",
+        "S010",
+        "S011",
+        "S012",
+        "S013",
+        "S014",
+        "S015",
+        "S016",
+        "S017",
+        "S018",
+        "S019",
+        "S020",
+        "S021",
+        "S022",
+        "S023",
+        "S024",
+        "S025",
+        "S026",
+        "S027",
+        "S028",
+        "S029",
+        "S030"
+      ],
       "description": "The wise and powerful ruler of the Enchanted Forest, seeking to end the curse that has befallen her realm.",
       "decks": {
         "action": {
@@ -297,6 +334,43 @@
     "the-cursed-wanderer": {
       "name": "The Cursed Wanderer",
       "initial_role": "protagonist",
+      "involved": [
+        "I001",
+        "I002",
+        "I003",
+        "I004",
+        "I005",
+        "S001",
+        "S002",
+        "S003",
+        "S004",
+        "S005",
+        "S006",
+        "S007",
+        "S008",
+        "S009",
+        "S010",
+        "S011",
+        "S012",
+        "S013",
+        "S014",
+        "S015",
+        "S016",
+        "S017",
+        "S018",
+        "S019",
+        "S020",
+        "S021",
+        "S022",
+        "S023",
+        "S024",
+        "S025",
+        "S026",
+        "S027",
+        "S028",
+        "S029",
+        "S030"
+      ],
       "description": "A cursed being condemned to roam the forest as a beast for unknown reasons. They seek redemption and a way to break their curse.",
       "decks": {
         "action": {
@@ -590,6 +664,43 @@
       "name": "The Sprite",
       "initial_role": "protagonist",
       "description": "A sprite who knows the secrets of the forest and offers help — for a price.",
+      "involved": [
+        "I001",
+        "I002",
+        "I003",
+        "I004",
+        "I005",
+        "S001",
+        "S002",
+        "S003",
+        "S004",
+        "S005",
+        "S006",
+        "S007",
+        "S008",
+        "S009",
+        "S010",
+        "S011",
+        "S012",
+        "S013",
+        "S014",
+        "S015",
+        "S016",
+        "S017",
+        "S018",
+        "S019",
+        "S020",
+        "S021",
+        "S022",
+        "S023",
+        "S024",
+        "S025",
+        "S026",
+        "S027",
+        "S028",
+        "S029",
+        "S030"
+      ],
       "decks": {
         "action": {
           "TS_A001": {
@@ -882,6 +993,7 @@
     "the-dark-sorcerer": {
       "name": "The Dark Sorcerer",
       "initial_role": "antagonist",
+      "involved": ["S020", "S029"],
       "description": "A powerful sorcerer who has cast a dark curse over the Enchanted Forest, seeking to corrupt its magic for his own gain. His presence spreads fear and despair, and he will stop at nothing to achieve his twisted goals.",
       "decks": {
         "action": {
@@ -2200,129 +2312,128 @@
       }
     },
     "S027": {
-        "title": "The Enchanted Stag",
-        "description": "A majestic stag offers assistance, but only if it is approached correctly.",
-        "sequence": "social",
-        "effect": {
-          "action": {
-            "draw": {
-              "value": 0,
-              "cond": null
-            },
-            "discard": {
-              "value": 0,
-              "cond": null
-            }
+      "title": "The Enchanted Stag",
+      "description": "A majestic stag offers assistance, but only if it is approached correctly.",
+      "sequence": "social",
+      "effect": {
+        "action": {
+          "draw": {
+            "value": 0,
+            "cond": null
           },
-          "social": {
-            "draw": {
-              "value": 2,
-              "cond": "success"
-            },
-            "discard": {
-              "value": 1,
-              "cond": "failure"
-            }
-          },
-          "resolution": {
-            "influence_threshold": 25,
-            "turn_limit": 2
+          "discard": {
+            "value": 0,
+            "cond": null
           }
-        }
-      },
-      "S028": {
-        "title": "The Moonlit Dance",
-        "description": "Under the light of the full moon, the group encounters a mysterious figure who offers a dance with fate.",
-        "sequence": "social",
-        "effect": {
-          "action": {
-            "draw": {
-              "value": 0,
-              "cond": null
-            },
-            "discard": {
-              "value": 0,
-              "cond": null
-            }
+        },
+        "social": {
+          "draw": {
+            "value": 2,
+            "cond": "success"
           },
-          "social": {
-            "draw": {
-              "value": 2,
-              "cond": "success"
-            },
-            "discard": {
-              "value": 1,
-              "cond": "failure"
-            }
-          },
-          "resolution": {
-            "influence_threshold": 20,
-            "turn_limit": 2
+          "discard": {
+            "value": 1,
+            "cond": "failure"
           }
+        },
+        "resolution": {
+          "influence_threshold": 25,
+          "turn_limit": 2
         }
-      },
-      "S029": {
-        "title": "The Final Confrontation",
-        "description": "The group finally confronts the Dark Sorcerer in a battle for the forest's fate.",
-        "sequence": "final",
-        "effect": {
-          "action": {
-            "draw": {
-              "value": 0,
-              "cond": null
-            },
-            "discard": {
-              "value": 7,
-              "cond": "failure"
-            }
+      }
+    },
+    "S028": {
+      "title": "The Moonlit Dance",
+      "description": "Under the light of the full moon, the group encounters a mysterious figure who offers a dance with fate.",
+      "sequence": "social",
+      "effect": {
+        "action": {
+          "draw": {
+            "value": 0,
+            "cond": null
           },
-          "social": {
-            "draw": {
-              "value": 0,
-              "cond": null
-            },
-            "discard": {
-              "value": 7,
-              "cond": "failure"
-            }
-          },
-          "resolution": {
-            "influence_threshold": 75,
-            "turn_limit": 10
+          "discard": {
+            "value": 0,
+            "cond": null
           }
-        }
-      },
-      "S030": {
-        "title": "The Forest Guardian's Test",
-        "description": "The Forest Guardian tests the group's worthiness to continue their journey.",
-        "sequence": "mix",
-        "effect": {
-          "action": {
-            "draw": {
-              "value": 1,
-              "cond": "success"
-            },
-            "discard": {
-              "value": 3,
-              "cond": "failure"
-            }
+        },
+        "social": {
+          "draw": {
+            "value": 2,
+            "cond": "success"
           },
-          "social": {
-            "draw": {
-              "value": 1,
-              "cond": "success"
-            },
-            "discard": {
-              "value": 2,
-              "cond": "failure"
-            }
-          },
-          "resolution": {
-            "influence_threshold": 35,
-            "turn_limit": 3
+          "discard": {
+            "value": 1,
+            "cond": "failure"
           }
+        },
+        "resolution": {
+          "influence_threshold": 20,
+          "turn_limit": 2
         }
-      }  
+      }
+    },
+    "S029": {
+      "title": "The Final Confrontation",
+      "description": "The group finally confronts the Dark Sorcerer in a battle for the forest's fate.",
+      "sequence": "final",
+      "effect": {
+        "action": {
+          "draw": {
+            "value": 0,
+            "cond": null
+          },
+          "discard": {
+            "value": 7,
+            "cond": "failure"
+          }
+        },
+        "social": {
+          "draw": {
+            "value": 0,
+            "cond": null
+          },
+          "discard": {
+            "value": 7,
+            "cond": "failure"
+          }
+        },
+        "resolution": {
+          "influence_threshold": 75,
+          "turn_limit": 10
+        }
+      }
+    },
+    "S030": {
+      "title": "The Forest Guardian's Test",
+      "description": "The Forest Guardian tests the group's worthiness to continue their journey.",
+      "sequence": "mix",
+      "effect": {
+        "action": {
+          "draw": {
+            "value": 1,
+            "cond": "success"
+          },
+          "discard": {
+            "value": 3,
+            "cond": "failure"
+          }
+        },
+        "social": {
+          "draw": {
+            "value": 1,
+            "cond": "success"
+          },
+          "discard": {
+            "value": 2,
+            "cond": "failure"
+          }
+        },
+        "resolution": {
+          "influence_threshold": 35,
+          "turn_limit": 3
+        }
+      }
+    }
   }
-
 }

@@ -66,7 +66,10 @@ const PlayTurnSchema = new ActionSchema('playTurn', {
   storylineId: SolidityType.STRING,
   gameId: SolidityType.STRING,
   castedCharacterId: SolidityType.STRING,
-  playedCardId: SolidityType.STRING,
+  cardId: SolidityType.STRING,
+  deckType: SolidityType.STRING,
+  planningAction: SolidityType.STRING,
+  actionType: SolidityType.STRING,
   timestamp: SolidityType.UINT,
 })
 

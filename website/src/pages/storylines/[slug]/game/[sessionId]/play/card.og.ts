@@ -9,7 +9,7 @@ const generateOgImage = async (): Promise<Buffer> => {
     style="height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #FDFDFD; font-size: 32px;"
   >
 
-      <span style="font-size:90px; font-family:'Tinos';">Event card revealed</span>
+      <span style="font-size:90px; font-family:'Tinos';">Card revealed !</span>
 
   </div>`)
 

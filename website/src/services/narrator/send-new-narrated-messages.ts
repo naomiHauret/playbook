@@ -28,8 +28,6 @@ export async function sendNewNarratedMessages(args: {
     }
     await new Promise((resolve) => setTimeout(resolve, 2000))
   }
-  console.log('response ', newResponse)
   //@ts-ignore
   const receipt = await conversation.send(newResponse)
-  console.log(receipt.sent)
 }

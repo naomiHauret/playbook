@@ -63,6 +63,7 @@ if (Astro.request.method === 'POST') {
           gameId,
           storylineId,
           player,
+          nextAction: `${Astro.url.origin}/storylines/${slug}/game/${sessionId}/play/turn`,
         })
     }
 

@@ -6,7 +6,7 @@
     "start": "NODE_ENV=production bun src/index.ts",
     "dev": "bun --watch src/index.ts",
     "build": "bun build src/index.ts",
-    "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md,mdx}\"",
     "test": "mocha --require ts-node/register src/**/*.test.ts"
   },
   "dependencies": {

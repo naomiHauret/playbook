@@ -10,6 +10,7 @@ export async function startGame(args: {
   contractAddress: string
   narratedEvent: StorylineCardEventWithNarrative
   player: string
+  nextAction: string
   game: {
     id: string
     current_influence_score: number
@@ -56,9 +57,7 @@ export async function startGame(args: {
   })
 
   const promptInitialEvent = createEventPrompt({ event: args.narratedEvent })
-  console.log('promptInitialEvent', promptInitialEvent)
 
-  /*
   const initialize = await publicClient.simulateContract({
     account: deployerAccount,
     address: contract.address,
@@ -73,7 +72,6 @@ export async function startGame(args: {
     player: args.player,
     chatId,
   })
-  */
 
-  await conversation.send(`Your game is about to start.\n\n/event to get the current event\n/`)
+  await conversation.send(args.nextAction)
 }

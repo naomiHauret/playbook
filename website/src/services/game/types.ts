@@ -136,8 +136,31 @@ export interface GameSession {
     id: string
     current_influence_score: number
     current_turn: number
-    play_order: Array<string>
+    turns: Record<
+      number,
+      Record<
+        string,
+        {
+          before_play: {
+            performed: boolean
+            action: 'discard' | 'draw' | 'none'
+          }
+          discard: {
+            cards: Array<{ id: string; deck: 'action' | 'social' }>
+          }
+          draw: {
+            cards: Array<{ id: string; deck: 'action' | 'social' }>
+          }
+          play: {
+            id: string
+            deck: 'action' | 'social'
+            succeeded: boolean
+          } | null
+        }
+      >
+    >
     involved: Array<string>
+    play_order: Array<string>
   }
 }
 

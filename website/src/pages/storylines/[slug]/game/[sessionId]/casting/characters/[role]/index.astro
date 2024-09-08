@@ -127,7 +127,7 @@ if (Astro.request.method === 'GET' && wallet) {
 
       // add option to change this cast
       frameMetadata = getFrameMetadata({
-        image: `${Astro.url.href}/casted.og`,
+        image: `${Astro.url.href}/casted.og?archetype=${encodeURI(character.name)}&personality=${personality}&alignment=${alignment}&nft=${encodeURI(JSON.stringify(pickedNft))}`,
         isOpenFrame: true,
         accepts: { xmtp: 'vNext' },
       })

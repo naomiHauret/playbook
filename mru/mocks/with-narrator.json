@@ -1,2035 +1,2262 @@
 {
-    "storylines": {
-      "the-enchanted-forest":{
-        "characters": {
-          "the-forest-queen": {
-            "initial_role": "protagonist",
-            "decks": {
-              "action": {
-                "FQ_A001": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "FQ_A002": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_A003": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "FQ_A004": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 100
-                },
-                "FQ_A005": {
-                  "influence": 6,
-                  "success_rate": 70,
-                  "influence_rate": 90
-                },
-                "FQ_A006": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "FQ_A007": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_A008": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "FQ_A009": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "FQ_A010": {
-                  "influence": 10,
-                  "success_rate": 95,
-                  "influence_rate": 100
-                },
-                "FQ_A011": {
-                  "influence": 7,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "FQ_A012": {
-                  "influence": 12,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "FQ_A013": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "FQ_A014": {
-                  "influence": 6,
-                  "success_rate": 95,
-                  "influence_rate": 90
-                },
-                "FQ_A015": {
-                  "influence": 9,
-                  "success_rate": 70,
-                  "influence_rate": 110
-                },
-                "FQ_A016": {
-                  "influence": 10,
-                  "success_rate": 85,
-                  "influence_rate": 120
-                },
-                "FQ_A017": {
-                  "influence": 12,
-                  "success_rate": 65,
-                  "influence_rate": 120
-                },
-                "FQ_A018": {
-                  "influence": 6,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_A019": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_A020": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                }
+  "storylines": {
+    "the-enchanted-forest": {
+      "characters": {
+        "the-forest-queen": {
+          "initial_role": "protagonist",
+          "involved": [
+            "I001",
+            "I002",
+            "I003",
+            "I004",
+            "I005",
+            "S001",
+            "S002",
+            "S003",
+            "S004",
+            "S005",
+            "S006",
+            "S007",
+            "S008",
+            "S009",
+            "S010",
+            "S011",
+            "S012",
+            "S013",
+            "S014",
+            "S015",
+            "S016",
+            "S017",
+            "S018",
+            "S019",
+            "S020",
+            "S021",
+            "S022",
+            "S023",
+            "S024",
+            "S025",
+            "S026",
+            "S027",
+            "S028",
+            "S029",
+            "S030"
+          ],
+          "decks": {
+            "action": {
+              "FQ_A001": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 120
               },
-              "social": {
-                "FQ_S001": {
-                  "influence": 10,
-                  "success_rate": 90,
-                  "influence_rate": 120
-                },
-                "FQ_S002": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "FQ_S003": {
-                  "influence": 7,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "FQ_S004": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 100
-                },
-                "FQ_S005": {
-                  "influence": 6,
-                  "success_rate": 95,
-                  "influence_rate": 90
-                },
-                "FQ_S006": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "FQ_S007": {
-                  "influence": 7,
-                  "success_rate": 80,
-                  "influence_rate": 100
-                },
-                "FQ_S008": {
-                  "influence": 9,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_S009": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "FQ_S010": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "FQ_S011": {
-                  "influence": 12,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "FQ_S012": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "FQ_S013": {
-                  "influence": 6,
-                  "success_rate": 95,
-                  "influence_rate": 90
-                },
-                "FQ_S014": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 100
-                },
-                "FQ_S015": {
-                  "id": "",
-                  "influence": 10,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_S016": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "FQ_S017": {
-                  "influence": 12,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "FQ_S018": {
-                  "influence": 6,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "FQ_S019": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "FQ_S020": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                }
+              "FQ_A002": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_A003": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "FQ_A004": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 100
+              },
+              "FQ_A005": {
+                "influence": 6,
+                "success_rate": 70,
+                "influence_rate": 90
+              },
+              "FQ_A006": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "FQ_A007": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_A008": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "FQ_A009": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "FQ_A010": {
+                "influence": 10,
+                "success_rate": 95,
+                "influence_rate": 100
+              },
+              "FQ_A011": {
+                "influence": 7,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "FQ_A012": {
+                "influence": 12,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "FQ_A013": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "FQ_A014": {
+                "influence": 6,
+                "success_rate": 95,
+                "influence_rate": 90
+              },
+              "FQ_A015": {
+                "influence": 9,
+                "success_rate": 70,
+                "influence_rate": 110
+              },
+              "FQ_A016": {
+                "influence": 10,
+                "success_rate": 85,
+                "influence_rate": 120
+              },
+              "FQ_A017": {
+                "influence": 12,
+                "success_rate": 65,
+                "influence_rate": 120
+              },
+              "FQ_A018": {
+                "influence": 6,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_A019": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_A020": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
               }
-            }
-          },
-          "the-cursed-wanderer": {
-            "initial_role": "protagonist",
-            "decks": {
-              "action": {
-                "CW_A001": {
-                  "influence": 12,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "CW_A002": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_A003": {
-                  "influence": 11,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "CW_A004": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "CW_A005": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "CW_A006": {
-                  "influence": 7,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_A007": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "CW_A008": {
-                  "influence": 10,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "CW_A009": {
-                  "influence": 11,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "CW_A010": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_A011": {
-                  "influence": 13,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "CW_A012": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "CW_A013": {
-                  "influence": 11,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "CW_A014": {
-                  "influence": 12,
-                  "success_rate": 65,
-                  "influence_rate": 130
-                },
-                "CW_A015": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_A016": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "CW_A017": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "CW_A018": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 100
-                },
-                "CW_A019": {
-                  "influence": 11,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "CW_A020": {
-                  "influence": 12,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                }
+            },
+            "social": {
+              "FQ_S001": {
+                "influence": 10,
+                "success_rate": 90,
+                "influence_rate": 120
               },
-              "social": {
-                "CW_S001": {
-                  "influence": 7,
-                  "success_rate": 70,
-                  "influence_rate": 110
-                },
-                "CW_S002": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "CW_S003": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "CW_S004": {
-                  "influence": 6,
-                  "success_rate": 80,
-                  "influence_rate": 100
-                },
-                "CW_S005": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "CW_S006": {
-                  "influence": 7,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_S007": {
-                  "influence": 6,
-                  "success_rate": 90,
-                  "influence_rate": 90
-                },
-                "CW_S008": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "CW_S009": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "CW_S010": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "CW_S011": {
-                  "influence": 9,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "CW_S012": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_S013": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "CW_S014": {
-                  "influence": 10,
-                  "success_rate": 65,
-                  "influence_rate": 130
-                },
-                "CW_S015": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "CW_S016": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "CW_S017": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 90
-                },
-                "CW_S018": {
-                  "influence": 9,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "CW_S019": {
-                  "id": "",
-                  "influence": 10,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "CW_S020": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 110
-                }
-              }
-            }
-          },
-          "the-sprite": {
-            "initial_role": "protagonist",
-            "decks": {
-              "action": {
-                "TS_A001": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_A002": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "TS_A003": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "TS_A004": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "TS_A005": {
-                  "influence": 10,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "TS_A006": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_A007": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "TS_A008": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "TS_A009": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "TS_A010": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "TS_A011": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 110
-                },
-                "TS_A012": {
-                  "influence": 9,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "TS_A013": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_A014": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 100
-                },
-                "TS_A015": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 110
-                },
-                "TS_A016": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "TS_A017": {
-                  "influence": 10,
-                  "success_rate": 65,
-                  "influence_rate": 130
-                },
-                "TS_A018": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_A019": {
-                  "influence": 10,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "TS_A020": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                }
+              "FQ_S002": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 100
               },
-              "social": {
-                "TS_S001": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "TS_S002": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "TS_S003": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "TS_S004": {
-                  "influence": 6,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_S005": {
-                  "influence": 8,
-                  "success_rate": 80,
-                  "influence_rate": 100
-                },
-                "TS_S006": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_S007": {
-                  "influence": 9,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "TS_S008": {
-                  "influence": 6,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "TS_S009": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "TS_S010": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "TS_S011": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 110
-                },
-                "TS_S012": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "TS_S013": {
-                  "id": "",
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_S014": {
-                  "id": "",
-                  "influence": 7,
-                  "success_rate": 80,
-                  "influence_rate": 110
-                },
-                "TS_S015": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_S016": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 100
-                },
-                "TS_S017": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 110
-                },
-                "TS_S018": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "TS_S019": {
-                  "influence": 9,
-                  "success_rate": 70,
-                  "influence_rate": 120
-                },
-                "TS_S020": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                }
-              }
-            }
-          },
-          "the-dark-sorcerer": {
-            "initial_role": "antagonist",
-            "decks": {
-              "action": {
-                "DS_A001": {
-                  "influence": 12,
-                  "success_rate": 75,
-                  "influence_rate": 130
-                },
-                "DS_A002": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_A003": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "DS_A004": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "DS_A005": {
-                  "influence": 11,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "DS_A006": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "DS_A007": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_A008": {
-                  "influence": 10,
-                  "success_rate": 75,
-                  "influence_rate": 130
-                },
-                "DS_A009": {
-                  "influence": 12,
-                  "success_rate": 70,
-                  "influence_rate": 140
-                },
-                "DS_A010": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_A011": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "DS_A012": {
-                  "influence": 11,
-                  "success_rate": 75,
-                  "influence_rate": 130
-                },
-                "DS_A013": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "DS_A014": {
-                  "influence": 10,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_A015": {
-                  "influence": 9,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "DS_A016": {
-                  "influence": 8,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "DS_A017": {
-                  "influence": 10,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "DS_A018": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "DS_A019": {
-                  "influence": 11,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "DS_A020": {
-                  "influence": 12,
-                  "success_rate": 70,
-                  "influence_rate": 140
-                }
+              "FQ_S003": {
+                "influence": 7,
+                "success_rate": 80,
+                "influence_rate": 110
               },
-              "social": {
-                "DS_S001": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_S002": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "DS_S003": {
-                  "influence": 10,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "DS_S004": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "DS_S005": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_S006": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "DS_S007": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "DS_S008": {
-                  "influence": 10,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "DS_S009": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_S010": {
-                  "influence": 10,
-                  "success_rate": 75,
-                  "influence_rate": 130
-                },
-                "DS_S011": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                },
-                "DS_S012": {
-                  "influence": 7,
-                  "success_rate": 90,
-                  "influence_rate": 100
-                },
-                "DS_S013": {
-                  "influence": 9,
-                  "success_rate": 75,
-                  "influence_rate": 120
-                },
-                "DS_S014": {
-                  "influence": 10,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "DS_S015": {
-                  "influence": 7,
-                  "success_rate": 85,
-                  "influence_rate": 100
-                },
-                "DS_S016": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_S017": {
-                  "influence": 8,
-                  "success_rate": 75,
-                  "influence_rate": 110
-                },
-                "DS_S018": {
-                  "influence": 10,
-                  "success_rate": 70,
-                  "influence_rate": 130
-                },
-                "DS_S019": {
-                  "influence": 9,
-                  "success_rate": 80,
-                  "influence_rate": 120
-                },
-                "DS_S020": {
-                  "influence": 8,
-                  "success_rate": 85,
-                  "influence_rate": 110
-                }
+              "FQ_S004": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 100
+              },
+              "FQ_S005": {
+                "influence": 6,
+                "success_rate": 95,
+                "influence_rate": 90
+              },
+              "FQ_S006": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "FQ_S007": {
+                "influence": 7,
+                "success_rate": 80,
+                "influence_rate": 100
+              },
+              "FQ_S008": {
+                "influence": 9,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_S009": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "FQ_S010": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "FQ_S011": {
+                "influence": 12,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "FQ_S012": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "FQ_S013": {
+                "influence": 6,
+                "success_rate": 95,
+                "influence_rate": 90
+              },
+              "FQ_S014": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 100
+              },
+              "FQ_S015": {
+                "id": "",
+                "influence": 10,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_S016": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "FQ_S017": {
+                "influence": 12,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "FQ_S018": {
+                "influence": 6,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "FQ_S019": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "FQ_S020": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
               }
             }
           }
         },
-        "initial_situations_pile": {
-          "I001": {
-            "sequence": "initial",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+        "the-cursed-wanderer": {
+          "initial_role": "protagonist",
+          "involved": [
+            "I001",
+            "I002",
+            "I003",
+            "I004",
+            "I005",
+            "S001",
+            "S002",
+            "S003",
+            "S004",
+            "S005",
+            "S006",
+            "S007",
+            "S008",
+            "S009",
+            "S010",
+            "S011",
+            "S012",
+            "S013",
+            "S014",
+            "S015",
+            "S016",
+            "S017",
+            "S018",
+            "S019",
+            "S020",
+            "S021",
+            "S022",
+            "S023",
+            "S024",
+            "S025",
+            "S026",
+            "S027",
+            "S028",
+            "S029",
+            "S030"
+          ],
+          "decks": {
+            "action": {
+              "CW_A001": {
+                "influence": 12,
+                "success_rate": 75,
+                "influence_rate": 120
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_A002": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 10,
-                "turn_limit": 2
+              "CW_A003": {
+                "influence": 11,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "CW_A004": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "CW_A005": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "CW_A006": {
+                "influence": 7,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "CW_A007": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "CW_A008": {
+                "influence": 10,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "CW_A009": {
+                "influence": 11,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "CW_A010": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "CW_A011": {
+                "influence": 13,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "CW_A012": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "CW_A013": {
+                "influence": 11,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "CW_A014": {
+                "influence": 12,
+                "success_rate": 65,
+                "influence_rate": 130
+              },
+              "CW_A015": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "CW_A016": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "CW_A017": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "CW_A018": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 100
+              },
+              "CW_A019": {
+                "influence": 11,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "CW_A020": {
+                "influence": 12,
+                "success_rate": 75,
+                "influence_rate": 120
               }
-            }
-          },
-          "I002": {
-            "sequence": "initial",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+            },
+            "social": {
+              "CW_S001": {
+                "influence": 7,
+                "success_rate": 70,
+                "influence_rate": 110
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S002": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 100
               },
-              "resolution": {
-                "influence_threshold": 15,
-                "turn_limit": 3
-              }
-            }
-          },
-          "I003": {
-            "sequence": "initial",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S003": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S004": {
+                "influence": 6,
+                "success_rate": 80,
+                "influence_rate": 100
               },
-              "resolution": {
-                "influence_threshold": 12,
-                "turn_limit": 2
-              }
-            }
-          },
-          "I004": {
-            "sequence": "initial",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S005": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 100
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S006": {
+                "influence": 7,
+                "success_rate": 80,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 20,
-                "turn_limit": 4
-              }
-            }
-          },
-          "I005": {
-            "sequence": "initial",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S007": {
+                "influence": 6,
+                "success_rate": 90,
+                "influence_rate": 90
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "CW_S008": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 120
               },
-              "resolution": {
-                "influence_threshold": 10,
-                "turn_limit": 2
+              "CW_S009": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "CW_S010": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "CW_S011": {
+                "influence": 9,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "CW_S012": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "CW_S013": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "CW_S014": {
+                "influence": 10,
+                "success_rate": 65,
+                "influence_rate": 130
+              },
+              "CW_S015": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "CW_S016": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "CW_S017": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 90
+              },
+              "CW_S018": {
+                "influence": 9,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "CW_S019": {
+                "id": "",
+                "influence": 10,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "CW_S020": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 110
               }
             }
           }
         },
-        "events_deck": {
-          "S001": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+        "the-sprite": {
+          "initial_role": "protagonist",
+          "involved": [
+            "I001",
+            "I002",
+            "I003",
+            "I004",
+            "I005",
+            "S001",
+            "S002",
+            "S003",
+            "S004",
+            "S005",
+            "S006",
+            "S007",
+            "S008",
+            "S009",
+            "S010",
+            "S011",
+            "S012",
+            "S013",
+            "S014",
+            "S015",
+            "S016",
+            "S017",
+            "S018",
+            "S019",
+            "S020",
+            "S021",
+            "S022",
+            "S023",
+            "S024",
+            "S025",
+            "S026",
+            "S027",
+            "S028",
+            "S029",
+            "S030"
+          ],
+          "decks": {
+            "action": {
+              "TS_A001": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "TS_A002": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 120
               },
-              "resolution": {
-                "influence_threshold": 30,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S002": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A003": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A004": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 35,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S003": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A005": {
+                "influence": 10,
+                "success_rate": 70,
+                "influence_rate": 130
               },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A006": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 28,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S004": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
+              "TS_A007": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
               },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
+              "TS_A008": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 40,
-                "turn_limit": 5
-              }
-            }
-          },
-          "S005": {
-            "sequence": "idle",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "fish": {
-                  "value": 3,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "TS_A009": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "fish": {
-                  "value": 3,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              }
-            }
-          },
-          "S006": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 4,
-                  "cond": "failure"
-                }
+              "TS_A010": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 120
               },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 4,
-                  "cond": "failure"
-                }
+              "TS_A011": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 45,
-                "turn_limit": 6
-              }
-            }
-          },
-          "S007": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 3,
-                  "cond": "failure"
-                }
+              "TS_A012": {
+                "influence": 9,
+                "success_rate": 70,
+                "influence_rate": 130
               },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 3,
-                  "cond": "failure"
-                }
+              "TS_A013": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 35,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S008": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A014": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 100
               },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
+              "TS_A015": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 110
               },
-              "resolution": {
-                "influence_threshold": 30,
-                "turn_limit": 2
-              }
-            }
-          },
-          "S009": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 2,
-                  "cond": "failure"
-                }
+              "TS_A016": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
               },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A017": {
+                "influence": 10,
+                "success_rate": 65,
+                "influence_rate": 130
               },
-              "resolution": {
-                "influence_threshold": 30,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S010": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A018": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
               },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
+              "TS_A019": {
+                "influence": 10,
+                "success_rate": 70,
+                "influence_rate": 130
               },
-              "resolution": {
-                "influence_threshold": 28,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S011": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 25,
-                "turn_limit": 2
-              }
-            }
-          },
-          "S012": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 20,
-                "turn_limit": 2
-              }
-            }
-          },
-          "S013": {
-            "sequence": "idle",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              }
-            }
-          },
-          "S014": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 3,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 25,
-                "turn_limit": 2
-              }
-            }
-          },
-          "S015": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 30,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S016": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "resolution": {
-                "influence_threshold": 30,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S017": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 1,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 35,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S018": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 6,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 6,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 40,
-                "turn_limit": 2
-              }
-            }
-          },
-          "S019": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 2,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 2,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 28,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S020": {
-            "sequence": "final",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 7,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 75,
-                "turn_limit": 10
-              }
-            }
-          },
-          "S021": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 6,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "discard": {
-                  "value": 4,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 35,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S022": {
-            "sequence": "mix",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 2,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 2,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 28,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S023": {
-            "sequence": "action",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 5,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 5,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 45,
-                "turn_limit": 3
-              }
-            }
-          },
-          "S024": {
-            "sequence": "social",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "fish": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 4,
-                  "cond": "failure"
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 2,
-                  "cond": "success"
-                },
-                "fish": {
-                  "value": 3,
-                  "cond": "success"
-                },
-                "discard": {
-                  "value": 5,
-                  "cond": "failure"
-                }
-              },
-              "resolution": {
-                "influence_threshold": 25,
-                "turn_limit": 2
-              }
-            }
-          },
-          "S025": {
-            "sequence": "idle",
-            "effect": {
-              "action": {
-                "draw": {
-                  "value": 1,
-                  "cond": "always"
-                },
-                "fish": {
-                  "value": 2,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "social": {
-                "draw": {
-                  "value": 1,
-                  "cond": "always"
-                },
-                "fish": {
-                  "value": 2,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              }
-            }
-          },
-          "S026": {
-            "sequence": "idle",
-            "effect": {
-              "social": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "fish": {
-                  "value": 3,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              },
-              "action": {
-                "draw": {
-                  "value": 0,
-                  "cond": null
-                },
-                "fish": {
-                  "value": 3,
-                  "cond": "always"
-                },
-                "discard": {
-                  "value": 0,
-                  "cond": null
-                }
-              }
-            }
-          },
-          "S027": {
-              "sequence": "social",
-              "effect": {
-                "action": {
-                  "draw": {
-                    "value": 0,
-                    "cond": null
-                  },
-                  "discard": {
-                    "value": 0,
-                    "cond": null
-                  }
-                },
-                "social": {
-                  "draw": {
-                    "value": 2,
-                    "cond": "success"
-                  },
-                  "discard": {
-                    "value": 1,
-                    "cond": "failure"
-                  }
-                },
-                "resolution": {
-                  "influence_threshold": 25,
-                  "turn_limit": 2
-                }
+              "TS_A020": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
               }
             },
-            "S028": {
-              "sequence": "social",
-              "effect": {
-                "action": {
-                  "draw": {
-                    "value": 0,
-                    "cond": null
-                  },
-                  "discard": {
-                    "value": 0,
-                    "cond": null
-                  }
-                },
-                "social": {
-                  "draw": {
-                    "value": 2,
-                    "cond": "success"
-                  },
-                  "discard": {
-                    "value": 1,
-                    "cond": "failure"
-                  }
-                },
-                "resolution": {
-                  "influence_threshold": 20,
-                  "turn_limit": 2
-                }
+            "social": {
+              "TS_S001": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "TS_S002": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "TS_S003": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "TS_S004": {
+                "influence": 6,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "TS_S005": {
+                "influence": 8,
+                "success_rate": 80,
+                "influence_rate": 100
+              },
+              "TS_S006": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "TS_S007": {
+                "influence": 9,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "TS_S008": {
+                "influence": 6,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "TS_S009": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "TS_S010": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "TS_S011": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 110
+              },
+              "TS_S012": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "TS_S013": {
+                "id": "",
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "TS_S014": {
+                "id": "",
+                "influence": 7,
+                "success_rate": 80,
+                "influence_rate": 110
+              },
+              "TS_S015": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "TS_S016": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 100
+              },
+              "TS_S017": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 110
+              },
+              "TS_S018": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "TS_S019": {
+                "influence": 9,
+                "success_rate": 70,
+                "influence_rate": 120
+              },
+              "TS_S020": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              }
+            }
+          }
+        },
+        "the-dark-sorcerer": {
+          "initial_role": "antagonist",
+          "involved": ["S020", "S029"],
+          "decks": {
+            "action": {
+              "DS_A001": {
+                "influence": 12,
+                "success_rate": 75,
+                "influence_rate": 130
+              },
+              "DS_A002": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_A003": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "DS_A004": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "DS_A005": {
+                "influence": 11,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "DS_A006": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "DS_A007": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_A008": {
+                "influence": 10,
+                "success_rate": 75,
+                "influence_rate": 130
+              },
+              "DS_A009": {
+                "influence": 12,
+                "success_rate": 70,
+                "influence_rate": 140
+              },
+              "DS_A010": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_A011": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "DS_A012": {
+                "influence": 11,
+                "success_rate": 75,
+                "influence_rate": 130
+              },
+              "DS_A013": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "DS_A014": {
+                "influence": 10,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_A015": {
+                "influence": 9,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "DS_A016": {
+                "influence": 8,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "DS_A017": {
+                "influence": 10,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "DS_A018": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "DS_A019": {
+                "influence": 11,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "DS_A020": {
+                "influence": 12,
+                "success_rate": 70,
+                "influence_rate": 140
               }
             },
-            "S029": {
-              "sequence": "final",
-              "effect": {
-                "action": {
-                  "draw": {
-                    "value": 0,
-                    "cond": null
-                  },
-                  "discard": {
-                    "value": 7,
-                    "cond": "failure"
-                  }
-                },
-                "social": {
-                  "draw": {
-                    "value": 0,
-                    "cond": null
-                  },
-                  "discard": {
-                    "value": 7,
-                    "cond": "failure"
-                  }
-                },
-                "resolution": {
-                  "influence_threshold": 75,
-                  "turn_limit": 10
-                }
+            "social": {
+              "DS_S001": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_S002": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "DS_S003": {
+                "influence": 10,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "DS_S004": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "DS_S005": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_S006": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "DS_S007": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "DS_S008": {
+                "influence": 10,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "DS_S009": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_S010": {
+                "influence": 10,
+                "success_rate": 75,
+                "influence_rate": 130
+              },
+              "DS_S011": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              },
+              "DS_S012": {
+                "influence": 7,
+                "success_rate": 90,
+                "influence_rate": 100
+              },
+              "DS_S013": {
+                "influence": 9,
+                "success_rate": 75,
+                "influence_rate": 120
+              },
+              "DS_S014": {
+                "influence": 10,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "DS_S015": {
+                "influence": 7,
+                "success_rate": 85,
+                "influence_rate": 100
+              },
+              "DS_S016": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_S017": {
+                "influence": 8,
+                "success_rate": 75,
+                "influence_rate": 110
+              },
+              "DS_S018": {
+                "influence": 10,
+                "success_rate": 70,
+                "influence_rate": 130
+              },
+              "DS_S019": {
+                "influence": 9,
+                "success_rate": 80,
+                "influence_rate": 120
+              },
+              "DS_S020": {
+                "influence": 8,
+                "success_rate": 85,
+                "influence_rate": 110
+              }
+            }
+          }
+        }
+      },
+      "initial_situations_pile": {
+        "I001": {
+          "sequence": "initial",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
               }
             },
-            "S030": {
-              "sequence": "mix",
-              "effect": {
-                "action": {
-                  "draw": {
-                    "value": 1,
-                    "cond": "success"
-                  },
-                  "discard": {
-                    "value": 3,
-                    "cond": "failure"
-                  }
-                },
-                "social": {
-                  "draw": {
-                    "value": 1,
-                    "cond": "success"
-                  },
-                  "discard": {
-                    "value": 2,
-                    "cond": "failure"
-                  }
-                },
-                "resolution": {
-                  "influence_threshold": 35,
-                  "turn_limit": 3
-                }
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
               }
-            }  
+            },
+            "resolution": {
+              "influence_threshold": 10,
+              "turn_limit": 2
+            }
+          }
+        },
+        "I002": {
+          "sequence": "initial",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 15,
+              "turn_limit": 3
+            }
+          }
+        },
+        "I003": {
+          "sequence": "initial",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 12,
+              "turn_limit": 2
+            }
+          }
+        },
+        "I004": {
+          "sequence": "initial",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 20,
+              "turn_limit": 4
+            }
+          }
+        },
+        "I005": {
+          "sequence": "initial",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 10,
+              "turn_limit": 2
+            }
+          }
+        }
+      },
+      "events_deck": {
+        "S001": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 30,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S002": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 35,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S003": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 28,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S004": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 40,
+              "turn_limit": 5
+            }
+          }
+        },
+        "S005": {
+          "sequence": "idle",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "fish": {
+                "value": 3,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "fish": {
+                "value": 3,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            }
+          }
+        },
+        "S006": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 4,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 4,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 45,
+              "turn_limit": 6
+            }
+          }
+        },
+        "S007": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 3,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 3,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 35,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S008": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 30,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S009": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 30,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S010": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 28,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S011": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 25,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S012": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 20,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S013": {
+          "sequence": "idle",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            }
+          }
+        },
+        "S014": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 3,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 25,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S015": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 30,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S016": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "resolution": {
+              "influence_threshold": 30,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S017": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 35,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S018": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 6,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 6,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 40,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S019": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 28,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S020": {
+          "sequence": "final",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 75,
+              "turn_limit": 10
+            }
+          }
+        },
+        "S021": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 6,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 4,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 35,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S022": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 28,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S023": {
+          "sequence": "action",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 5,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 5,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 45,
+              "turn_limit": 3
+            }
+          }
+        },
+        "S024": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "fish": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 4,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "fish": {
+                "value": 3,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 5,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 25,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S025": {
+          "sequence": "idle",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "always"
+              },
+              "fish": {
+                "value": 2,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "always"
+              },
+              "fish": {
+                "value": 2,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            }
+          }
+        },
+        "S026": {
+          "sequence": "idle",
+          "effect": {
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "fish": {
+                "value": 3,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "fish": {
+                "value": 3,
+                "cond": "always"
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            }
+          }
+        },
+        "S027": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 25,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S028": {
+          "sequence": "social",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 0,
+                "cond": null
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 2,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 1,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 20,
+              "turn_limit": 2
+            }
+          }
+        },
+        "S029": {
+          "sequence": "final",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 0,
+                "cond": null
+              },
+              "discard": {
+                "value": 7,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 75,
+              "turn_limit": 10
+            }
+          }
+        },
+        "S030": {
+          "sequence": "mix",
+          "effect": {
+            "action": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 3,
+                "cond": "failure"
+              }
+            },
+            "social": {
+              "draw": {
+                "value": 1,
+                "cond": "success"
+              },
+              "discard": {
+                "value": 2,
+                "cond": "failure"
+              }
+            },
+            "resolution": {
+              "influence_threshold": 35,
+              "turn_limit": 3
+            }
+          }
         }
       }
-    },
-    "players": {
-      "0x44817B9B9d0b7Cd4aC7Eb7fb53E3184c4FAC0fb0": {
-        "games": {
-          "the-enchanted-forest": {
-            "decks_extra_cards": {},
-            "sessions": {
-              "0x9b0700dcbb28662aa1f8bdcf9359e3aabdb071554b5aae48cbebcedfc80602ae": {
-                "status": "ready",
-                "created_at": 0,
-                "started_at": 0,
-                "last_updated_at": 1725493315049,
-                "finished_at": 0,
-                "galadriel_contract_address": "0xa5f377720c1bd2f3ad147e2714044f3068914c53" ,
-                "events_discard_pile": [], 
-                "events_deck": ["S001", "S002", "S003", "S004", "S005", "S006", "S007", "S008", "S009", "S010", "S011", "S012", "S013", "S014", "S015", "S016", "S017", "S018", "S019", "S020", "S021", "S022", "S023", "S024", "S025", "S026", "S027", "S028", "S029", "S030"],
-                "characters": {
-                    "the-forest-queen": {
-                        "nftContractAddress": "0xb0278207e6c82b0b1c11bafcf3bbeaef5d871fa8",
-                        "nftId": "1",
-                        "nftName": "Silly triplets",
-                        "chainId": "zora_sepolia",
-                        "personality": "Jokester",
-                        "alignment": "Chaotic Good",
-                        "role": "protagonist",
-                        "hand": [ "FQ_A004", "FQ_A012", "FQ_A003", "FQ_S003", "FQ_S009", "FQ_S020" ],
-                        "decks": {
-                          "action": { "draw_pile": ["FQ_A006", "FQ_A001", "FQ_A017", "FQ_A010", "FQ_A001", "FQ_A019", "FQ_A008", "FQ_A014", "FQ_A020", "FQ_A018"], "discard_pile": [] },
-                          "social": { "draw_pile": ["FQ_S001", "FQ_S012", "FQ_S017", "FQ_S010", "FQ_S019",  "FQ_S002", "FQ_S011", "FQ_S014", "FQ_S006", "FQ_S018"], "discard_pile": [] }
-                        }
+    }
+  },
+  "players": {
+    "0x44817B9B9d0b7Cd4aC7Eb7fb53E3184c4FAC0fb0": {
+      "games": {
+        "the-enchanted-forest": {
+          "decks_extra_cards": {},
+          "sessions": {
+            "0x9b0700dcbb28662aa1f8bdcf9359e3aabdb071554b5aae48cbebcedfc80602ae": {
+              "status": "ready",
+              "created_at": 0,
+              "started_at": 0,
+              "last_updated_at": 1725493315049,
+              "finished_at": 0,
+              "galadriel_contract_address": "0x86ca13c9b122cfec766fd4fa33c429c32740124e",
+              "events_discard_pile": [],
+              "events_deck": [
+                "S001",
+                "S002",
+                "S003",
+                "S004",
+                "S005",
+                "S006",
+                "S007",
+                "S008",
+                "S009",
+                "S010",
+                "S011",
+                "S012",
+                "S013",
+                "S014",
+                "S015",
+                "S016",
+                "S017",
+                "S018",
+                "S019",
+                "S020",
+                "S021",
+                "S022",
+                "S023",
+                "S024",
+                "S025",
+                "S026",
+                "S027",
+                "S028",
+                "S029",
+                "S030"
+              ],
+              "characters": {
+                "the-forest-queen": {
+                  "nftContractAddress": "0xb0278207e6c82b0b1c11bafcf3bbeaef5d871fa8",
+                  "nftId": "1",
+                  "nftName": "Silly triplets",
+                  "chainId": "zora_sepolia",
+                  "personality": "Jokester",
+                  "alignment": "Chaotic Good",
+                  "role": "protagonist",
+                  "hand": ["FQ_A004", "FQ_A012", "FQ_A003", "FQ_S003", "FQ_S009", "FQ_S020"],
+                  "decks": {
+                    "action": {
+                      "draw_pile": [
+                        "FQ_A006",
+                        "FQ_A001",
+                        "FQ_A017",
+                        "FQ_A010",
+                        "FQ_A001",
+                        "FQ_A019",
+                        "FQ_A008",
+                        "FQ_A014",
+                        "FQ_A020",
+                        "FQ_A018"
+                      ],
+                      "discard_pile": []
                     },
-                    "the-cursed-wanderer": {
-                        "nftContractAddress": "0xce6d23526ecee201114d24689e07221ccea63523",
-                        "nftId": "4",
-                        "nftName": "Super sad semi-transparent ghost",
-                        "chainId": "base_sepolia",
-                        "personality": "Friendly",
-                        "alignment": "Chaotic Neutral",
-                        "role": "protagonist",
-                        "hand": [ "CW_A006", "CW_A020", "CW_A016", "CW_S001", "CW_S012", "CW_S013" ],
-                        "decks": {
-                          "action": { "draw_pile": [
-                            "CW_A012",
-                            "CW_A010",
-                            "CW_A008",
-                            "CW_A003",
-                            "CW_A009",
-                            "CW_A011",
-                            "CW_A005",
-                            "CW_A001",
-                            "CW_A014"
-                          ], "discard_pile": [] },
-                          "social": { "draw_pile": [
-                            "CW_A002",
-                            "CW_A010",
-                            "CW_A008",
-                            "CW_A003",
-                            "CW_A009",
-                            "CW_A011",
-                            "CW_A005",
-                            "CW_A014",
-                            "CW_A018",
-                            "CW_A007"
-                          ], "discard_pile": [] }
-                        }
-                    },
-                    "the-sprite": {
-                        "nftContractAddress": "0xce6d23526ecee201114d24689e07221ccea63523",
-                        "nftId": "1",
-                        "nftName": "Super sad ghost",
-                        "chainId": "base_sepolia",
-                        "personality": "Unpredictable",
-                        "alignment": "Lawful Neutral",
-                        "role": "protagonist",
-                        "hand": [ "TS_A020", "TS_A009", "TS_A011", "TS_S016", "TS_S015", "TS_S008" ],
-                        "decks": {
-                          "action": { "draw_pile": [
-                            "TS_A016", "TS_A002", "TS_A017","TS_A004","TS_A012","TS_A018","TS_A016","TS_A006","TS_A001","TS_A014","TS_A007"
-                          ], "discard_pile": [] },
-                          "social": { "draw_pile": [
-                            "TS_S005", "TS_S012", "TS_S002","TS_S013","TS_S017", "TS_S020","TS_S007","TS_S019", "TS_S014","TS_S009","TS_S011"
-                          ], "discard_pile": [] }
-                        }
-                    },
-                    "the-dark-sorcerer" : {
-                        "nftContractAddress": "0xce6d23526ecee201114d24689e07221ccea63523",
-                        "nftId": "2",
-                        "nftName": "Super sad vintage ghost",
-                        "chainId": "base_sepolia",
-                        "personality": "Pious",
-                        "alignment": "Lawful Evil",
-                        "role": "antagonist",
-                        "hand": [ "DS_A007", "DS_A016", "DS_A004", "DS_S016", "DS_S014", "DS_S008" ],
-                        "decks": {
-                          "action": { "draw_pile": [
-                            "DS_A012", "DS_A001", "DS_A008", "DS_A002", "DS_A006", "DS_A020", "DS_A013", "DS_A010", "DS_A011", "DS_A007",  "DS_A017" 
-                          ], "discard_pile": [] },
-                          "social": { "draw_pile": [
-                            "DS_S003", "DS_S012", "DS_S018", "DS_S007", "DS_S019", "DS_S005", "DS_S015", "DS_S009", "DS_S005", "DS_S001", "DS_S006"
-                          ], "discard_pile": [] }
-                        }
-                      }
-                    
+                    "social": {
+                      "draw_pile": [
+                        "FQ_S001",
+                        "FQ_S012",
+                        "FQ_S017",
+                        "FQ_S010",
+                        "FQ_S019",
+                        "FQ_S002",
+                        "FQ_S011",
+                        "FQ_S014",
+                        "FQ_S006",
+                        "FQ_S018"
+                      ],
+                      "discard_pile": []
+                    }
+                  }
                 },
-                "current_event": {
-                  "id": "",
-                  "current_influence_score": 0,
-                  "current_turn": 0,
-                  "turns": {},
-                  "play_order": []
+                "the-cursed-wanderer": {
+                  "nftContractAddress": "0xce6d23526ecee201114d24689e07221ccea63523",
+                  "nftId": "4",
+                  "nftName": "Super sad semi-transparent ghost",
+                  "chainId": "base_sepolia",
+                  "personality": "Friendly",
+                  "alignment": "Chaotic Neutral",
+                  "role": "protagonist",
+                  "hand": ["CW_A006", "CW_A020", "CW_A016", "CW_S001", "CW_S012", "CW_S013"],
+                  "decks": {
+                    "action": {
+                      "draw_pile": [
+                        "CW_A012",
+                        "CW_A010",
+                        "CW_A008",
+                        "CW_A003",
+                        "CW_A009",
+                        "CW_A011",
+                        "CW_A005",
+                        "CW_A001",
+                        "CW_A014"
+                      ],
+                      "discard_pile": []
+                    },
+                    "social": {
+                      "draw_pile": [
+                        "CW_A002",
+                        "CW_A010",
+                        "CW_A008",
+                        "CW_A003",
+                        "CW_A009",
+                        "CW_A011",
+                        "CW_A005",
+                        "CW_A014",
+                        "CW_A018",
+                        "CW_A007"
+                      ],
+                      "discard_pile": []
+                    }
+                  }
+                },
+                "the-sprite": {
+                  "nftContractAddress": "0xce6d23526ecee201114d24689e07221ccea63523",
+                  "nftId": "1",
+                  "nftName": "Super sad ghost",
+                  "chainId": "base_sepolia",
+                  "personality": "Unpredictable",
+                  "alignment": "Lawful Neutral",
+                  "role": "protagonist",
+                  "hand": ["TS_A020", "TS_A009", "TS_A011", "TS_S016", "TS_S015", "TS_S008"],
+                  "decks": {
+                    "action": {
+                      "draw_pile": [
+                        "TS_A016",
+                        "TS_A002",
+                        "TS_A017",
+                        "TS_A004",
+                        "TS_A012",
+                        "TS_A018",
+                        "TS_A016",
+                        "TS_A006",
+                        "TS_A001",
+                        "TS_A014",
+                        "TS_A007"
+                      ],
+                      "discard_pile": []
+                    },
+                    "social": {
+                      "draw_pile": [
+                        "TS_S005",
+                        "TS_S012",
+                        "TS_S002",
+                        "TS_S013",
+                        "TS_S017",
+                        "TS_S020",
+                        "TS_S007",
+                        "TS_S019",
+                        "TS_S014",
+                        "TS_S009",
+                        "TS_S011"
+                      ],
+                      "discard_pile": []
+                    }
+                  }
+                },
+                "the-dark-sorcerer": {
+                  "nftContractAddress": "0xce6d23526ecee201114d24689e07221ccea63523",
+                  "nftId": "2",
+                  "nftName": "Super sad vintage ghost",
+                  "chainId": "base_sepolia",
+                  "personality": "Pious",
+                  "alignment": "Lawful Evil",
+                  "role": "antagonist",
+                  "hand": ["DS_A007", "DS_A016", "DS_A004", "DS_S016", "DS_S014", "DS_S008"],
+                  "decks": {
+                    "action": {
+                      "draw_pile": [
+                        "DS_A012",
+                        "DS_A001",
+                        "DS_A008",
+                        "DS_A002",
+                        "DS_A006",
+                        "DS_A020",
+                        "DS_A013",
+                        "DS_A010",
+                        "DS_A011",
+                        "DS_A007",
+                        "DS_A017"
+                      ],
+                      "discard_pile": []
+                    },
+                    "social": {
+                      "draw_pile": [
+                        "DS_S003",
+                        "DS_S012",
+                        "DS_S018",
+                        "DS_S007",
+                        "DS_S019",
+                        "DS_S005",
+                        "DS_S015",
+                        "DS_S009",
+                        "DS_S005",
+                        "DS_S001",
+                        "DS_S006"
+                      ],
+                      "discard_pile": []
+                    }
+                  }
                 }
+              },
+              "current_event": {
+                "id": "",
+                "current_influence_score": 0,
+                "current_turn": 0,
+                "turns": {},
+                "play_order": []
               }
             }
           }
@@ -2037,6 +2264,4 @@
       }
     }
   }
-  
-  
-  
+}

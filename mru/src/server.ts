@@ -15,6 +15,8 @@ export enum SERVER_ROUTES_GROUPS_PREFIX {
 }
 
 export enum ROUTES_API {
+  storylines = '/storylines',
+  storyline = '/storylines/:storylineId',
   playerSession = '/players/:player/games/:storylineId/sessions/:gameId',
 }
 export enum ROUTES_MRU {
@@ -22,7 +24,8 @@ export enum ROUTES_MRU {
   bootstrapGame = '/bootstrap',
   cast = '/cast',
   configureInfra = '/configure-infra',
-  drawEvent = '/draw-event',
+  drawEvent = '/events/draw',
+  play = '/play',
 }
 
 /**
@@ -35,6 +38,75 @@ export async function main() {
    * API routes
    */
   const apiRoutes = new Elysia({ prefix: SERVER_ROUTES_GROUPS_PREFIX.api })
+    /**
+     * Return storyline
+     */
+    .get(
+      ROUTES_API.storylines,
+
+      async () => {
+        const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+        if (!machine) {
+          throw new Error('Machine not found')
+        }
+        const { state } = machine
+
+        const requests = await Promise.allSettled(
+          Object.keys(state.storylines).map(async (id) => {
+            const story = await fetchStoryline({
+              storylineId: id,
+              state,
+            })
+            return {
+              id,
+              ...story,
+            }
+          }),
+        )
+
+        const storylines = requests
+          .filter((request) => request.status === 'fulfilled')
+          .map((request) => {
+            const story = request.value
+            return {
+              id: story.id,
+              title: story.title,
+              description: story.description,
+              casting: Object.keys(story.characters).length,
+            }
+          })
+
+        return storylines
+      },
+      {
+        type: 'json',
+      },
+    )
+    /**
+     * Return storyline
+     */
+    .get(
+      ROUTES_API.storyline,
+
+      async ({ params: { storylineId } }) => {
+        const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+        if (!machine) {
+          throw new Error('Machine not found')
+        }
+        const { state } = machine
+        const storyline = await fetchStoryline({
+          storylineId,
+          state,
+        })
+        return storyline
+      },
+      {
+        params: t.Object({
+          storylineId: t.String(),
+        }),
+        type: 'json',
+      },
+    )
     /**
      * Return game session for a given player and storyline
      */
@@ -77,6 +149,7 @@ export async function main() {
       async () => {
         const transitionToSchema = mru.getStfSchemaMap()
         const { name, version, chainId, verifyingContract, salt } = mru.config.domain
+
         return {
           domain: {
             name,
@@ -100,6 +173,136 @@ export async function main() {
       },
       {
         type: 'json',
+      },
+    )
+    /**
+     * Request to draw an event card
+     */
+    .post(
+      ROUTES_MRU.drawEvent,
+      async ({ body }) => {
+        try {
+          const inputs = {
+            storylineId: body.storylineId,
+            gameId: body.gameId,
+            timestamp: +body.timestamp,
+          }
+
+          const drawEvent = schemas.drawEvent.actionFrom({
+            inputs,
+            signature: body.signature,
+            msgSender: body.player,
+          })
+
+          const ack = await mru.submitAction(MruActions.drawEvent, drawEvent)
+
+          // leverage the ack to wait for C1 and access logs & error from STF execution
+          const { logs, errors } = await ack.waitFor(ActionConfirmationStatus.C1)
+
+          const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+          if (!machine) {
+            throw new Error('Machine not found')
+          }
+          const { state } = machine
+          const narration = await fetchStoryline({
+            storylineId: body.storylineId,
+            state,
+          })
+          const session = state.players[body.player].games[body.storylineId].sessions[body.gameId]
+          const cardId = session.current_event.id
+          const card =
+            session.events_discard_pile.length <= 1
+              ? narration.initial_situations_pile[cardId]
+              : narration.events_deck[cardId]
+
+          return {
+            event: card,
+            narrator: session.galadriel_contract_address,
+            game: session.current_event,
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      },
+      {
+        type: 'json',
+        body: t.Object({
+          player: t.String(),
+          storylineId: t.String(),
+          gameId: t.String(),
+          signature: t.String(),
+          timestamp: t.Number(),
+        }),
+      },
+    )
+    /**
+     * Request to play a turn
+     */
+    .post(
+      ROUTES_MRU.play,
+      async ({ body }) => {
+        try {
+          const inputs = {
+            storylineId: body.storylineId,
+            gameId: body.gameId,
+            castedCharacterId: body.castedCharacterId,
+            cardId: body.cardId,
+            planningAction: body.planningAction,
+            deckType: body.deckType,
+            actionType: body.actionType,
+            timestamp: +body.timestamp,
+          }
+
+          const playTurn = schemas.playTurn.actionFrom({
+            inputs,
+            signature: body.signature,
+            msgSender: body.player,
+          })
+
+          const ack = await mru.submitAction(MruActions.playTurn, playTurn)
+
+          // leverage the ack to wait for C1 and access logs & error from STF execution
+          const { logs, errors } = await ack.waitFor(ActionConfirmationStatus.C1)
+
+          const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
+          if (!machine) {
+            throw new Error('Machine not found')
+          }
+          const { state } = machine
+          const narration = await fetchStoryline({
+            storylineId: body.storylineId,
+            state,
+          })
+          const session = state.players[body.player].games[body.storylineId].sessions[body.gameId]
+          const cardId = session.current_event.id
+          const card =
+            session.events_discard_pile.length <= 1
+              ? narration.initial_situations_pile[cardId]
+              : narration.events_deck[cardId]
+
+          return {
+            event: card,
+            narrator: session.galadriel_contract_address,
+            game: session.current_event,
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      },
+      {
+        type: 'json',
+        body: t.Object({
+          player: t.String(),
+          storylineId: t.String(),
+          castedCharacterId: t.String(),
+          cardId: t.String(),
+          planningAction: t.String(),
+          deckType: t.String(),
+          actionType: t.String(),
+          gameId: t.String(),
+          signature: t.String(),
+          timestamp: t.Number(),
+        }),
       },
     )
     /**
@@ -272,68 +475,7 @@ export async function main() {
         }),
       },
     )
-    /**
-     * Request to draw an event card
-     */
-    .post(
-      ROUTES_MRU.drawEvent,
-      async ({ body }) => {
-        try {
-          const inputs = {
-            storylineId: body.storylineId,
-            gameId: body.gameId,
-            timestamp: +body.timestamp,
-          }
 
-          const drawEvent = schemas.drawEvent.actionFrom({
-            inputs,
-            signature: body.signature,
-            msgSender: body.player,
-          })
-
-          const ack = await mru.submitAction(MruActions.drawEvent, drawEvent)
-
-          // leverage the ack to wait for C1 and access logs & error from STF execution
-          const { logs, errors } = await ack.waitFor(ActionConfirmationStatus.C1)
-
-          const machine = mru.stateMachines.get<typeof playbookMachine>(MACHINE_PLAYBOOK_ID)
-          if (!machine) {
-            throw new Error('Machine not found')
-          }
-          const { state } = machine
-          const narration = await fetchStoryline({
-            storylineId: body.storylineId,
-            state,
-          })
-          const session = state.players[body.player].games[body.storylineId].sessions[body.gameId]
-          const cardId = session.current_event.id
-          const card =
-            session.events_discard_pile.length <= 1
-              ? narration.initial_situations_pile[cardId]
-              : narration.events_deck[cardId]
-
-          return {
-            card,
-            session: {
-              current_event: session.current_event,
-            },
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-      {
-        type: 'json',
-        body: t.Object({
-          player: t.String(),
-          storylineId: t.String(),
-          gameId: t.String(),
-          aiContractAddress: t.String(),
-          signature: t.String(),
-          timestamp: t.Number(),
-        }),
-      },
-    )
   new Elysia()
     .use(mruRoutes)
     .use(apiRoutes)
