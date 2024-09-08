@@ -12,6 +12,7 @@
     "@xmtp/message-kit": "latest"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.8",
     "nodemon": "^3.1.3",
     "prettier": "^3.3.3",
     "tunnelmole": "^2.2.14",
